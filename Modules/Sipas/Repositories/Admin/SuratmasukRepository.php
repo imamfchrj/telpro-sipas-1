@@ -20,7 +20,13 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
         $perPage = $options['per_page'] ?? null;
         $orderByFields = $options['order'] ?? [];
 
-        $suratmasuk = new MSuratmasuk();
+        $suratmasuk = (new MSuratmasuk())->where(
+            function ($query) {
+                if (auth()->user()->roles[0]->id == 8 || auth()->user()->roles[0]->id == 9 || auth()->user()->roles[0]->id == 11) {
+                    $query->where('created_by', auth()->user()->id);
+                }
+            }
+        );
 
         if ($orderByFields) {
             foreach ($orderByFields as $field => $sort) {
@@ -64,6 +70,8 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
         $suratmasuk->disposisi = $unit_id;
         $suratmasuk->disposisi_kode_unit = $unit_kode;
         $suratmasuk->disposisi_name = $unit_name;
+        $suratmasuk->created_by = auth()->user()->id;
+        $suratmasuk->created_by_name = auth()->user()->name;
         return $suratmasuk->save();
     }
 
@@ -94,6 +102,8 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
         $suratmasuk->disposisi = $unit_id;
         $suratmasuk->disposisi_kode_unit = $unit_kode;
         $suratmasuk->disposisi_name = $unit_name;
+        $suratmasuk->updated_by = auth()->user()->id;
+        $suratmasuk->updated_by_name = auth()->user()->name;
         return $suratmasuk->save();
     }
 

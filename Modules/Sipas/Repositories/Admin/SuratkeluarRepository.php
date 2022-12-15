@@ -42,22 +42,6 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
 
     public function create($params = [])
     {
-        // Format Number JIB
-//        $tahun = date('Y');
-//        $array_bulan = array(1 => "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII");
-//        $bulan = $array_bulan[date('n')];
-//
-//        $last_pegnajuan = Pengajuan::where('tahun', $tahun)->where('kategori_id', 1)
-//            ->orderBy('id', 'DESC')
-//            ->first();
-//        if (empty($last_pegnajuan)) {
-//            $new_number = sprintf("%05d", 00001);
-//        } else {
-//            $last_number = $last_pegnajuan->number;
-//            $new_numbers = $last_number + 1;
-//            $new_number = sprintf("%05d", $new_numbers);
-//        }
-//        $no_jib = $new_number . '/JIB/B/' . $bulan . '/' . $tahun;
         $time = strtotime($params ['tanggalSk']);
         $tahun = date('Y', $time);
 

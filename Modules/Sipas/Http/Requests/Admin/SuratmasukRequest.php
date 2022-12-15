@@ -21,8 +21,12 @@ class SuratmasukRequest extends FormRequest
     public function rules()
     {
         return array_merge([
-            'name' => '',
-
+            'nomor_surat' => '',
+            'tanggal_surat' => '',
+            'tanggal_terima' => '',
+            'perihal' => '',
+            'dari' => '',
+            'kepada' => '',
         ]);
     }
 

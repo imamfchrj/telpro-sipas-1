@@ -10,6 +10,7 @@ namespace Modules\Sipas\Repositories\Admin;
 
 use DB;
 use Modules\Sipas\Entities\MSuratmasuk;
+use Modules\Sipas\Entities\MUnit;
 use Modules\Sipas\Repositories\Admin\Interfaces\SuratmasukRepositoryInterface;
 
 class SuratmasukRepository implements SuratmasukRepositoryInterface
@@ -42,9 +43,27 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
 
     public function create($params = [])
     {
+        $cek_unit = MUnit::where('kode_loker_sap', $params['kepada'])
+            ->orderBy('id', 'DESC')
+            ->first();
+        $unit_id = $cek_unit->id;
+        $unit_kode = $cek_unit->kode_unit_sap;
+        $unit_name = $cek_unit->unit;
+
+        $time = strtotime($params ['tanggal_terima']);
+        $tahun = date('Y', $time);
+
         // Insert Customer
         $suratmasuk = new MSuratmasuk();
-        $suratmasuk->name = $params['name'];
+        $suratmasuk->nomor_surat = $params['nomor_surat'];
+        $suratmasuk->tanggal_surat = $params['tanggal_surat'];
+        $suratmasuk->tanggal_terima = $params['tanggal_terima'];
+        $suratmasuk->tahun = $tahun;
+        $suratmasuk->perihal = $params['perihal'];
+        $suratmasuk->dari = $params['dari'];
+        $suratmasuk->disposisi = $unit_id;
+        $suratmasuk->disposisi_kode_unit = $unit_kode;
+        $suratmasuk->disposisi_name = $unit_name;
         return $suratmasuk->save();
     }
 
@@ -55,8 +74,26 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
 
     public function update($id, $params = [])
     {
+        $cek_unit = MUnit::where('kode_loker_sap', $params['kepada'])
+            ->orderBy('id', 'DESC')
+            ->first();
+        $unit_id = $cek_unit->id;
+        $unit_kode = $cek_unit->kode_unit_sap;
+        $unit_name = $cek_unit->unit;
+
+        $time = strtotime($params ['tanggal_terima']);
+        $tahun = date('Y', $time);
+
         $suratmasuk = MSuratmasuk::findOrFail($id);
-        $suratmasuk->name = $params['name'];
+        $suratmasuk->nomor_surat = $params['nomor_surat'];
+        $suratmasuk->tanggal_surat = $params['tanggal_surat'];
+        $suratmasuk->tanggal_terima = $params['tanggal_terima'];
+        $suratmasuk->tahun = $tahun;
+        $suratmasuk->perihal = $params['perihal'];
+        $suratmasuk->dari = $params['dari'];
+        $suratmasuk->disposisi = $unit_id;
+        $suratmasuk->disposisi_kode_unit = $unit_kode;
+        $suratmasuk->disposisi_name = $unit_name;
         return $suratmasuk->save();
     }
 

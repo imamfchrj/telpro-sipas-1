@@ -17,8 +17,8 @@ class SuratkeluarController extends SipasController
 {
     use Authorizable;
 
-    private  $suratkeluarRepository,
-            $unitRepository;
+    private $suratkeluarRepository,
+        $unitRepository;
 
     public function __construct(
         SuratkeluarRepositoryInterface $suratkeluarRepository,

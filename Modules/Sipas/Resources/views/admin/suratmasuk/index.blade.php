@@ -23,9 +23,10 @@
                                     <th>No</th>
                                     <th>Tanggal Terima</th>
                                     <th>Nomor Surat</th>
-                                    <th>Tanggal Surat</th>
-                                    <th>Dari</th>
                                     <th>Perihal</th>
+                                    <th>Dari</th>
+                                    <th>Kepada</th>
+                                    <th>Tanggal Surat</th>
                                     <th>Action</th>
                                     </thead>
                                     <tbody>
@@ -34,9 +35,10 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{ $suratmasuk->tanggal_terima }}</td>
                                             <td>{{ $suratmasuk->nomor_surat }}</td>
-                                            <td>{{ $suratmasuk->tanggal_surat }}</td>
-                                            <td>{{ $suratmasuk->dari }}</td>
                                             <td>{{ $suratmasuk->perihal }}</td>
+                                            <td>{{ $suratmasuk->dari }}</td>
+                                            <td>{{ $suratmasuk->disposisi_name }}</td>
+                                            <td>{{ $suratmasuk->tanggal_surat }}</td>
                                             <td>
                                                 {{--@can('view_sipas-suratmasuk')--}}
                                                 {{--<a class="btn btn-sm btn-primary"--}}

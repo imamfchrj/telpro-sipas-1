@@ -4,17 +4,51 @@ namespace Modules\Sipas\Http\Controllers\Admin;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
-class WorkspaceSuratMasukController extends Controller
+use Modules\Sipas\Http\Controllers\SipasController;
+use Modules\Sipas\Http\Requests\Admin\WorkspaceSuratMasukRequest;
+
+use Modules\Sipas\Repositories\Admin\Interfaces\SuratmasukRepositoryInterface;
+use Modules\Sipas\Repositories\Admin\Interfaces\UnitRepositoryInterface;
+
+use App\Authorizable;
+
+class WorkspaceSuratMasukController extends SipasController
 {
+    use Authorizable;
+
+    private $suratmasukRepository,
+        $unitRepository;
+
+    public function __construct(
+        SuratmasukRepositoryInterface $suratmasukRepository,
+        UnitRepositoryInterface $unitRepository
+    )
+    {
+        parent::__construct();
+        $this->data['currentAdminMenu'] = 'suratmasuk';
+
+        $this->suratmasukRepository = $suratmasukRepository;
+        $this->unitRepository = $unitRepository;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('sipas::index');
+        $params = $request->all();
+        $options = [
+            'per_page' => 10,
+            'order' => [
+                'id' => 'asc',
+            ],
+            'filter' => $params,
+        ];
+        $this->data['workspacesuratmasuks'] = $this->suratmasukRepository->findAllworkspace($options);
+        $this->data['filter'] = $params;
+        return view('sipas::admin.workspacesuratmasuk.index', $this->data);
     }
 
     /**
@@ -53,7 +87,12 @@ class WorkspaceSuratMasukController extends Controller
      */
     public function edit($id)
     {
-        return view('sipas::edit');
+        $this->data['workspacesuratmasuk'] = $this->suratmasukRepository->findById($id);
+
+        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'kode_unit_sap');
+        $this->data['unit_id'] = null;
+
+        return view('sipas::admin.workspacesuratmasuk.form', $this->data);
     }
 
     /**
@@ -62,9 +101,17 @@ class WorkspaceSuratMasukController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(WorkspaceSuratMasukRequest $request, $id)
     {
-        //
+        $params = $request->validated();
+
+        if ($this->suratmasukRepository->updateworkspace($id, $params)) {
+            return redirect('admin/sipas/workspace-suratmasuk')
+                ->with('success', 'Surat Masuk has been Received');
+        }
+
+        return redirect('admin/sipas/workspace-suratmasuk/' . $id . '/edit')
+            ->with('error', 'Could not received the Surat Masuk');
     }
 
     /**

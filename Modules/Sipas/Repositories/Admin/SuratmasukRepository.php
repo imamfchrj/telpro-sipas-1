@@ -26,6 +26,11 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
                     $query->where('created_by', auth()->user()->id);
                 }
             }
+        )->orWhere(
+            function ($query) {
+                $query->where('disposisi', auth()->user()->group)
+                    ->where('status_id', 2);
+            }
         );
 
         if ($orderByFields) {
@@ -72,6 +77,8 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
         $suratmasuk->disposisi_name = $unit_name;
         $suratmasuk->created_by = auth()->user()->id;
         $suratmasuk->created_by_name = auth()->user()->name;
+        $suratmasuk->status_id = 1;
+        $suratmasuk->status = 'Pending Received';
         return $suratmasuk->save();
     }
 
@@ -102,8 +109,6 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
         $suratmasuk->disposisi = $unit_id;
         $suratmasuk->disposisi_kode_unit = $unit_kode;
         $suratmasuk->disposisi_name = $unit_name;
-        $suratmasuk->updated_by = auth()->user()->id;
-        $suratmasuk->updated_by_name = auth()->user()->name;
         return $suratmasuk->save();
     }
 
@@ -111,5 +116,45 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
     {
         $suratmasuk = MSuratmasuk::findOrFail($id);
         return $suratmasuk->forceDelete();
+    }
+
+    //WORKSPACE
+
+    public function findAllworkspace($options = [])
+    {
+        $perPage = $options['per_page'] ?? null;
+        $orderByFields = $options['order'] ?? [];
+
+        $suratmasuk = (new MSuratmasuk())->where('disposisi', auth()->user()->group)->where('status_id', 1);
+
+        if ($orderByFields) {
+            foreach ($orderByFields as $field => $sort) {
+                $suratmasuk = $suratmasuk->orderBy($field, $sort);
+            }
+        }
+
+        if (!empty($options['filter']['q'])) {
+            $suratmasuk = $suratmasuk->where(function ($query) use ($options) {
+                $query->where('perihal', 'LIKE', "%{$options['filter']['q']}%");
+            });
+        }
+
+        if ($perPage) {
+            return $suratmasuk->paginate($perPage);
+        }
+
+        return $suratmasuk->get();
+    }
+
+    public function updateworkspace($id, $params = [])
+    {
+        $suratmasuk = MSuratmasuk::findOrFail($id);
+        $suratmasuk->nomor_surat = $params['nomor_surat'];
+        $suratmasuk->tanggal_surat = $params['tanggal_surat'];
+        $suratmasuk->updated_by = auth()->user()->id;
+        $suratmasuk->updated_by_name = auth()->user()->name;
+        $suratmasuk->status_id = 2;
+        $suratmasuk->status = 'Received';
+        return $suratmasuk->save();
     }
 }

@@ -23,7 +23,8 @@ class SuratmasukController extends SipasController
     public function __construct(
         SuratmasukRepositoryInterface $suratmasukRepository,
         UnitRepositoryInterface $unitRepository
-    ) {
+    )
+    {
         parent::__construct();
         $this->data['currentAdminMenu'] = 'suratmasuk';
 
@@ -39,7 +40,8 @@ class SuratmasukController extends SipasController
     {
         $params = $request->all();
         $options = [
-            'per_page' => $this->perPage,
+//            'per_page' => $this->perPage,
+            'per_page' => 10,
             'order' => [
                 'id' => 'asc',
             ],
@@ -47,7 +49,7 @@ class SuratmasukController extends SipasController
         ];
         $this->data['suratmasuks'] = $this->suratmasukRepository->findAll($options);
         $this->data['filter'] = $params;
-        return view('sipas::admin.suratmasuk.index',$this->data);
+        return view('sipas::admin.suratmasuk.index', $this->data);
     }
 
     /**
@@ -84,7 +86,9 @@ class SuratmasukController extends SipasController
      */
     public function show($id)
     {
-        return view('sipas::show');
+        $this->data['suratmasuk'] = $this->suratmasukRepository->findById($id);
+
+        return view('sipas::admin.suratmasuk.show', $this->data);
     }
 
     /**
@@ -117,7 +121,7 @@ class SuratmasukController extends SipasController
                 ->with('success', 'Surat Masuk has been Updated');
         }
 
-        return redirect('admin/sipas/suratmasuk/'. $id .'/edit')
+        return redirect('admin/sipas/suratmasuk/' . $id . '/edit')
             ->with('error', 'Could not update the Surat Masuk');
     }
 

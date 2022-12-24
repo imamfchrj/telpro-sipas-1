@@ -39,7 +39,8 @@ class SuratkeluarController extends SipasController
     {
         $params = $request->all();
         $options = [
-            'per_page' => $this->perPage,
+//            'per_page' => $this->perPage,
+            'per_page' => 10,
             'order' => [
                 'id' => 'asc',
             ],
@@ -56,8 +57,8 @@ class SuratkeluarController extends SipasController
      */
     public function create()
     {
-
-        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'kode_unit_sap');
+        $this->data['unit_by_userId'] = $this->unitRepository->findByUserId();
+        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'id');
         $this->data['unit_id'] = null;
 
         return view('sipas::admin.suratkeluar.form', $this->data);

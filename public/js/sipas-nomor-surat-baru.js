@@ -1,6 +1,6 @@
-function klasifikasi(kategori) {
-    if(kategori.value == 'HK') {
-        $('#klasifikasiSk').html(
+function klasifikasi_get(kategori) {
+    if (kategori.value == 'HK') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>\
             <option value="000">000 - Hukum</option>\
             <optgroup label="Peraturan Non Perusahaan">\
@@ -61,9 +61,8 @@ function klasifikasi(kategori) {
             <option value="940">940 - Memorandum of Understanding (MOU)</option>\
             <option value="950">950 - Bentuk Kerjasama/Perikatan Luar Negeri Lainnya</option>'
         )
-    }
-    else if(kategori.value == 'KU') {
-        $('#klasifikasiSk').html(
+    } else if (kategori.value == 'KU') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>\
             <option value="000">000 - Keuangan</option>\
             <optgroup label="Perbankan">\
@@ -114,9 +113,8 @@ function klasifikasi(kategori) {
             <option value="620">620 - Pentarifan</option>\
             <option value="630">630 - Surat Berharga (Obligasi, Saham, dll)</option>'
         )
-    }
-    else if(kategori.value == 'LG') {
-        $('#klasifikasiSk').html(
+    } else if (kategori.value == 'LG') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>\
             <option value="000">000 - Logistik</option>\
             <optgroup label="Perencanaan & Analisis Kebutuhan">\
@@ -156,9 +154,8 @@ function klasifikasi(kategori) {
             <option value="560">560 - Mutasi Barang</option>\
             <option value="570">570 - Administrasi Logistik Lainnya</option>'
         )
-    }
-    else if(kategori.value == 'PR') {
-        $('#klasifikasiSk').html(
+    } else if (kategori.value == 'PR') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>\
             <option value="000">000 - Public Relation</option>\
             <optgroup label="Keperluan">\
@@ -185,9 +182,8 @@ function klasifikasi(kategori) {
             <option value="320">320 - Pengelolaan Dokumentasi</option>\
             <option value="330">330 - Pelayanan Informasi</option>'
         )
-    }
-    else if(kategori.value == 'LP') {
-        $('#klasifikasiSk').html(
+    } else if (kategori.value == 'LP') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>\
             <option value="000">000 - Pengelolaan Data & Pelaporan</option>\
             <optgroup label="Pengolahan Data/Pelaporan Teknis">\
@@ -207,9 +203,8 @@ function klasifikasi(kategori) {
             <option value="270">270 - Pengolahan Data/Pelaporan Keuangan</option>\
             <option value="280">280 - Pengolahan Data/Pelaporan Fungsional Lainnya</option>'
         )
-    }
-    else if(kategori.value == 'PD') {
-        $('#klasifikasiSk').html(
+    } else if (kategori.value == 'PD') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>\
             <option value="000">000 - Pendidikan & Pelatihan</option>\
             <optgroup label="Analisa Kebutuhan Diklat">\
@@ -252,9 +247,8 @@ function klasifikasi(kategori) {
             <option value="620">620 - Ijazah/Sertifikat</option>\
             <option value="630">630 - Administrasi Pendidikan & Pelatihan Lainnya</option>'
         )
-    }
-    else if(kategori.value == 'PS') {
-        $('#klasifikasiSk').html(
+    } else if (kategori.value == 'PS') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>\
             <option value="000">000 - Personalia</option>\
             <optgroup label="Organisasi & Perencanaan Kebutuhan">\
@@ -333,9 +327,8 @@ function klasifikasi(kategori) {
             <option value="940">940 - Pensiun</option>\
             <option value="950">950 - Nominatif Pensiun</option>'
         )
-    }
-    else if(kategori.value == 'UM') {
-        $('#klasifikasiSk').html(
+    } else if (kategori.value == 'UM') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>\
             <option value="000">000 - Umum</option>\
             <optgroup label="Manajemen Perkantoran">\
@@ -372,9 +365,8 @@ function klasifikasi(kategori) {
             <option value="560">560 - Anak Perusahaan</option>\
             <option value="570">570 - Yayasan/Perkumpulan/Lembaga Lainnya</option>'
         )
-    }
-    else if(kategori.value == 'LB') {
-        $('#klasifikasiSk').html(
+    } else if (kategori.value == 'LB') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>\
             <option value="000">000 - Penelitian & Pengembangan</option>\
             <optgroup label="Perencanaan Perusahaan">\
@@ -398,9 +390,8 @@ function klasifikasi(kategori) {
             <option value="380">380 - Penelitian/Pengembangan Manajemen Pelaporan Data & Pengolahan Data</option>\
             <option value="390">390 - Penelitian/Pengembangan Manajemen Fungsional Lainnya</option>'
         )
-    }
-    else if(kategori.value == 'PW') {
-        $('#klasifikasiSk').html(
+    } else if (kategori.value == 'PW') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>\
             <option value="000">000 - Pengawasan</option>\
             <optgroup label="Pengawasan Fungsional">\
@@ -414,9 +405,8 @@ function klasifikasi(kategori) {
             <option value="170">170 - Pengawasan Penelitian & Pengembangan</option>\
             <option value="180">180 - Bidang/Fungsional Lainnya</option>'
         )
-    }
-    else if(kategori.value == '') {
-        $('#klasifikasiSk').html(
+    } else if (kategori.value == '') {
+        $('#klasifikasi').html(
             '<option value="">- Pilih -</option>'
         )
     }

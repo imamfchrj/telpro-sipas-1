@@ -6,7 +6,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Dashboard</a></div>
                 <div class="breadcrumb-item active"><a
-                            href="{{ url('admin/sipas/suratkeluar') }}">Manage Surat Keluar</a></div>
+                            href="{{ url('admin/sipas/workspace') }}">Workspace Surat Keluar</a></div>
             </div>
         </div>
         <div class="section-body">
@@ -51,7 +51,7 @@
                                                 {{--@endcan--}}
                                                 @can('edit_sipas-suratkeluar')
                                                     <a class="btn btn-sm btn-warning"
-                                                       href="{{ url('admin/sipas/suratkeluar/'. $workspace->id .'/edit')}}"><i
+                                                       href="{{ url('admin/sipas/workspace/'. $workspace->id .'/edit')}}"><i
                                                                 class="far fa-edit"></i>
                                                     </a>
                                                 @endcan
@@ -78,6 +78,20 @@
                                     @endforelse
                                     </tbody>
                                 </table>
+                                <div class="card-header">
+                                    <h4 class="text-md-right">
+                                        Showing
+                                        {{ $workspaces->firstItem() }}
+                                        to
+                                        {{ $workspaces->lastItem() }}
+                                        of
+                                        {{ $workspaces->total() }}
+                                        Entries
+                                    </h4>
+                                    <div class="card-header-action">
+                                        {{ $workspaces->links() }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -48,7 +48,7 @@ class SuratkeluarController extends SipasController
         ];
         $this->data['suratkeluars'] = $this->suratkeluarRepository->findAll($options);
         $this->data['filter'] = $params;
-        return view('sipas::admin.suratkeluar.index',$this->data);
+        return view('sipas::admin.suratkeluar.index', $this->data);
     }
 
     /**
@@ -119,7 +119,7 @@ class SuratkeluarController extends SipasController
                 ->with('success', 'Surat Keluar has been Updated');
         }
 
-        return redirect('admin/sipas/suratkeluar/'. $id .'/edit')
+        return redirect('admin/sipas/suratkeluar/' . $id . '/edit')
             ->with('error', 'Could not update the Surat Keluar');
     }
 

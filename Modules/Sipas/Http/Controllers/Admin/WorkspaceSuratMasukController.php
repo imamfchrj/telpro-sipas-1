@@ -89,7 +89,7 @@ class WorkspaceSuratMasukController extends SipasController
     {
         $this->data['workspacesuratmasuk'] = $this->suratmasukRepository->findById($id);
 
-        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'kode_unit_sap');
+        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'id');
         $this->data['unit_id'] = null;
 
         return view('sipas::admin.workspacesuratmasuk.form', $this->data);

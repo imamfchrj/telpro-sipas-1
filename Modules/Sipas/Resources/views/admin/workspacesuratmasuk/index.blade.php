@@ -6,7 +6,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Dashboard</a></div>
                 <div class="breadcrumb-item active"><a
-                            href="{{ url('admin/sipas/workspacesuratmasuk') }}">Manage Surat Masuk</a></div>
+                            href="{{ url('admin/sipas/workspacesuratmasuk') }}">Workspace Surat Masuk</a></div>
             </div>
         </div>
         <div class="section-body">

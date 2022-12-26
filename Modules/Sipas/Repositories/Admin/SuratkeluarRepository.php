@@ -84,8 +84,6 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
 //        exit;
 
 
-
-
         // Insert Customer
         $suratkeluar = new MSuratkeluar();
         $suratkeluar->kategori = $params['kategori'];
@@ -126,5 +124,43 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
     {
         $suratkeluar = MSuratkeluar::findOrFail($id);
         return $suratkeluar->forceDelete();
+    }
+
+    public function findAllworkspace($options = [])
+    {
+        $perPage = $options['per_page'] ?? null;
+        $orderByFields = $options['order'] ?? [];
+
+        $suratmasuk = (new MSuratkeluar())->where('id_unit', auth()->user()->group)->where('status_id', 1)->orwhere('status_id', 2);
+
+        if ($orderByFields) {
+            foreach ($orderByFields as $field => $sort) {
+                $suratmasuk = $suratmasuk->orderBy($field, $sort);
+            }
+        }
+
+        if (!empty($options['filter']['q'])) {
+            $suratmasuk = $suratmasuk->where(function ($query) use ($options) {
+                $query->where('perihal', 'LIKE', "%{$options['filter']['q']}%");
+            });
+        }
+
+        if ($perPage) {
+            return $suratmasuk->paginate($perPage);
+        }
+
+        return $suratmasuk->get();
+    }
+
+    public function updateworkspace($id, $params = [])
+    {
+        $suratmasuk = MSuratkeluar::findOrFail($id);
+        $suratmasuk->nomor_surat = $params['nomor_surat'];
+        $suratmasuk->tanggal_surat = $params['tanggal_surat'];
+        $suratmasuk->updated_by = auth()->user()->id;
+        $suratmasuk->updated_by_name = auth()->user()->name;
+        $suratmasuk->status_id = 2;
+        $suratmasuk->status = 'Received';
+        return $suratmasuk->save();
     }
 }

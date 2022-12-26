@@ -14,6 +14,7 @@ interface UnitRepositoryInterface
     public function findAll($options = []);
     public function create($params = []);
     public function findById($id);
+    public function findByUserId();
     public function update($id, $params = []);
     public function delete($id);
 }

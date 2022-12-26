@@ -6,14 +6,14 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
 use Modules\Sipas\Http\Controllers\SipasController;
-use Modules\Sipas\Http\Requests\Admin\SuratmasukRequest;
+use Modules\Sipas\Http\Requests\Admin\WorkspaceSuratMasukRequest;
 
 use Modules\Sipas\Repositories\Admin\Interfaces\SuratmasukRepositoryInterface;
 use Modules\Sipas\Repositories\Admin\Interfaces\UnitRepositoryInterface;
 
 use App\Authorizable;
 
-class SuratmasukController extends SipasController
+class WorkspaceSuratMasukController extends SipasController
 {
     use Authorizable;
 
@@ -40,16 +40,15 @@ class SuratmasukController extends SipasController
     {
         $params = $request->all();
         $options = [
-//            'per_page' => $this->perPage,
             'per_page' => 10,
             'order' => [
                 'id' => 'asc',
             ],
             'filter' => $params,
         ];
-        $this->data['suratmasuks'] = $this->suratmasukRepository->findAll($options);
+        $this->data['workspacesuratmasuks'] = $this->suratmasukRepository->findAllworkspace($options);
         $this->data['filter'] = $params;
-        return view('sipas::admin.suratmasuk.index', $this->data);
+        return view('sipas::admin.workspacesuratmasuk.index', $this->data);
     }
 
     /**
@@ -58,10 +57,7 @@ class SuratmasukController extends SipasController
      */
     public function create()
     {
-        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'kode_unit_sap');
-        $this->data['unit_id'] = null;
-
-        return view('sipas::admin.suratmasuk.form', $this->data);
+        return view('sipas::create');
     }
 
     /**
@@ -69,14 +65,9 @@ class SuratmasukController extends SipasController
      * @param Request $request
      * @return Renderable
      */
-    public function store(SuratmasukRequest $request)
+    public function store(Request $request)
     {
-        $params = $request->validated();
-
-        if ($this->suratmasukRepository->create($params)) {
-            return redirect('admin/sipas/suratmasuk')
-                ->with('success', 'Surat Masuk has been created');
-        }
+        //
     }
 
     /**
@@ -86,9 +77,7 @@ class SuratmasukController extends SipasController
      */
     public function show($id)
     {
-        $this->data['suratmasuk'] = $this->suratmasukRepository->findById($id);
-
-        return view('sipas::admin.suratmasuk.show', $this->data);
+        return view('sipas::show');
     }
 
     /**
@@ -98,12 +87,12 @@ class SuratmasukController extends SipasController
      */
     public function edit($id)
     {
-        $this->data['suratmasuk'] = $this->suratmasukRepository->findById($id);
+        $this->data['workspacesuratmasuk'] = $this->suratmasukRepository->findById($id);
 
-        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'kode_unit_sap');
+        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'id');
         $this->data['unit_id'] = null;
 
-        return view('sipas::admin.suratmasuk.form', $this->data);
+        return view('sipas::admin.workspacesuratmasuk.form', $this->data);
     }
 
     /**
@@ -112,17 +101,17 @@ class SuratmasukController extends SipasController
      * @param int $id
      * @return Renderable
      */
-    public function update(SuratmasukRequest $request, $id)
+    public function update(WorkspaceSuratMasukRequest $request, $id)
     {
         $params = $request->validated();
 
-        if ($this->suratmasukRepository->update($id, $params)) {
-            return redirect('admin/sipas/suratmasuk')
-                ->with('success', 'Surat Masuk has been Updated');
+        if ($this->suratmasukRepository->updateworkspace($id, $params)) {
+            return redirect('admin/sipas/workspace-suratmasuk')
+                ->with('success', 'Surat Masuk has been Received');
         }
 
-        return redirect('admin/sipas/suratmasuk/' . $id . '/edit')
-            ->with('error', 'Could not update the Surat Masuk');
+        return redirect('admin/sipas/workspace-suratmasuk/' . $id . '/edit')
+            ->with('error', 'Could not received the Surat Masuk');
     }
 
     /**
@@ -132,12 +121,6 @@ class SuratmasukController extends SipasController
      */
     public function destroy($id)
     {
-
-        if ($this->suratmasukRepository->delete($id)) {
-            return redirect('admin/sipas/suratmasuk')
-                ->with('success', 'Surat Masuk has been deleted.');
-        }
-
-        return redirect('admin/sipas/suratmasuk')->with('error', 'Could not delete the Anggaran.');
+        //
     }
 }

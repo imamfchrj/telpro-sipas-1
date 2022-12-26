@@ -17,13 +17,14 @@ class WorkspaceController extends SipasController
 {
     use Authorizable;
 
-    private  $suratkeluarRepository,
-            $unitRepository;
+    private $suratkeluarRepository,
+        $unitRepository;
 
     public function __construct(
         SuratkeluarRepositoryInterface $suratkeluarRepository,
         UnitRepositoryInterface $unitRepository
-    ) {
+    )
+    {
         parent::__construct();
         $this->data['currentAdminMenu'] = 'suratkeluar';
 
@@ -39,15 +40,16 @@ class WorkspaceController extends SipasController
     {
         $params = $request->all();
         $options = [
-            'per_page' => $this->perPage,
+//            'per_page' => $this->perPage,
+            'per_page' => 10,
             'order' => [
                 'id' => 'asc',
             ],
             'filter' => $params,
         ];
-        $this->data['workspaces'] = $this->suratkeluarRepository->findAll($options);
+        $this->data['workspaces'] = $this->suratkeluarRepository->findAllworkspace($options);
         $this->data['filter'] = $params;
-        return view('sipas::admin.workspace.index',$this->data);
+        return view('sipas::admin.workspace.index', $this->data);
     }
 
     /**
@@ -86,7 +88,12 @@ class WorkspaceController extends SipasController
      */
     public function edit($id)
     {
-        return view('sipas::edit');
+        $this->data['workspace'] = $this->suratkeluarRepository->findById($id);
+
+        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'id');
+        $this->data['unit_id'] = null;
+
+        return view('sipas::admin.workspace.form', $this->data);
     }
 
     /**

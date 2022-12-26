@@ -21,20 +21,17 @@ class SuratkeluarRequest extends FormRequest
     public function rules()
     {
         return array_merge([
-            'kategoriSk' => '',
-            'klasifikasiSk' => '',
-            'unitSk' => '',
-//            'tahun' => '',
-//            'nomor' => '',
-//            'nomor_surat' => '',
-            'tanggalSk' => '',
-            'dariSk' => '',
-            'kepadaSk' => '',
-            'perihalSk' => '',
-            'ketSk' => '',
-            'lampiranSk' => ''
-//            'created_by' => '',
-//            'updated_by' => ''
+            'kategori' => '',
+            'klasifikasi' => '',
+            'tanggal_surat' => '',
+            'id_unit' => '',
+            'dari' => '',
+            'dari_id_unit' => '',
+            'dari_kode_unit' => '',
+            'kepada' => '',
+            'perihal' => '',
+            'keterangan' => '',
+//            'lampiranSk' => ''
 
         ]);
     }

@@ -54,6 +54,11 @@ class UnitRepository implements UnitRepositoryInterface
         return MUnit::findOrFail($id);
     }
 
+    public function findByUserId()
+    {
+        return MUnit::findOrFail(auth()->user()->group);
+    }
+
     public function update($id, $params = [])
     {
         $unit = MUnit::findOrFail($id);

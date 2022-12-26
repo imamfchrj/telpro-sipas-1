@@ -78,6 +78,20 @@
                                     @endforelse
                                     </tbody>
                                 </table>
+                                <div class="card-header">
+                                    <h4 class="text-md-right">
+                                        Showing
+                                        {{ $suratkeluars->firstItem() }}
+                                        to
+                                        {{ $suratkeluars->lastItem() }}
+                                        of
+                                        {{ $suratkeluars->total() }}
+                                        Entries
+                                    </h4>
+                                    <div class="card-header-action">
+                                        {{ $suratkeluars->links() }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

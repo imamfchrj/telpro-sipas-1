@@ -23,50 +23,55 @@
                                     <th>No</th>
                                     <th>Tanggal Terima</th>
                                     <th>Nomor Surat</th>
-                                    <th>Tanggal Surat</th>
-                                    <th>Dari</th>
                                     <th>Perihal</th>
+                                    <th>Dari</th>
+                                    <th>Kepada</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                     </thead>
                                     <tbody>
                                     @forelse ($suratmasuks as $suratmasuk)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
+                                            {{--<td>{{ $suratmasuk->id}}</td>--}}
                                             <td>{{ $suratmasuk->tanggal_terima }}</td>
                                             <td>{{ $suratmasuk->nomor_surat }}</td>
-                                            <td>{{ $suratmasuk->tanggal_surat }}</td>
-                                            <td>{{ $suratmasuk->dari }}</td>
                                             <td>{{ $suratmasuk->perihal }}</td>
+                                            <td>{{ $suratmasuk->dari }}</td>
+                                            <td>{{ $suratmasuk->disposisi_name }}</td>
+                                            <td>{{ $suratmasuk->status }}</td>
                                             <td>
-                                                {{--@can('view_sipas-suratmasuk')--}}
-                                                {{--<a class="btn btn-sm btn-primary"--}}
-                                                {{--href="{{ url('admin/sipas/suratmasuk/'. $suratmasuk->id )}}"><i--}}
-                                                {{--class="far fa-eye"></i>--}}
-                                                {{--Show--}}
-                                                {{--</a>--}}
-                                                {{--@endcan--}}
-                                                @can('edit_sipas-suratmasuk')
-                                                    <a class="btn btn-sm btn-warning"
-                                                       href="{{ url('admin/sipas/suratmasuk/'. $suratmasuk->id .'/edit')}}"><i
-                                                                class="far fa-edit"></i>
+                                                @if ($suratmasuk->status_id <> 2)
+                                                    @can('edit_sipas-suratmasuk')
+                                                        <a class="btn btn-sm btn-warning"
+                                                           href="{{ url('admin/sipas/suratmasuk/'. $suratmasuk->id .'/edit')}}"><i
+                                                                    class="far fa-edit"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('delete_sipas-suratmasuk')
+                                                        <a href="{{ url('admin/sipas/suratmasuk/'. $suratmasuk->id) }}"
+                                                           class="btn btn-sm btn-danger" onclick="
+                                                                event.preventDefault();
+                                                                if (confirm('Do you want to remove this?')) {
+                                                                document.getElementById('delete-role-{{ $suratmasuk->id }}').submit();
+                                                                }">
+                                                            <i class="far fa-trash-alt"></i>
+                                                        </a>
+                                                        <form id="delete-role-{{ $suratmasuk->id }}"
+                                                              action="{{ url('admin/sipas/suratmasuk/'. $suratmasuk->id) }}"
+                                                              method="POST">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            @csrf
+                                                        </form>
+                                                    @endcan
+                                                @else
+                                                    @can('view_sipas-suratmasuk')
+                                                    <a class="btn btn-sm btn-primary"
+                                                        href="{{ url('admin/sipas/suratmasuk/'. $suratmasuk->id )}}"><i
+                                                        class="far fa-eye"></i>
                                                     </a>
-                                                @endcan
-                                                @can('delete_sipas-suratmasuk')
-                                                    <a href="{{ url('admin/sipas/suratmasuk/'. $suratmasuk->id) }}"
-                                                       class="btn btn-sm btn-danger" onclick="
-                                                            event.preventDefault();
-                                                            if (confirm('Do you want to remove this?')) {
-                                                            document.getElementById('delete-role-{{ $suratmasuk->id }}').submit();
-                                                            }">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                    <form id="delete-role-{{ $suratmasuk->id }}"
-                                                          action="{{ url('admin/sipas/suratmasuk/'. $suratmasuk->id) }}"
-                                                          method="POST">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        @csrf
-                                                    </form>
-                                                @endcan
+                                                    @endcan
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty
@@ -74,6 +79,20 @@
                                     @endforelse
                                     </tbody>
                                 </table>
+                                <div class="card-header">
+                                    <h4 class="text-md-right">
+                                        Showing
+                                        {{ $suratmasuks->firstItem() }}
+                                        to
+                                        {{ $suratmasuks->lastItem() }}
+                                        of
+                                        {{ $suratmasuks->total() }}
+                                        Entries
+                                    </h4>
+                                    <div class="card-header-action">
+                                        {{ $suratmasuks->links() }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

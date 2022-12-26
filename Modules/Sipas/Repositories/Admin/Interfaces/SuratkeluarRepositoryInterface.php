@@ -16,4 +16,6 @@ interface SuratkeluarRepositoryInterface
     public function findById($id);
     public function update($id, $params = []);
     public function delete($id);
+    public function findAllworkspace($options = []);
+    public function updateworkspace($id, $params = []);
 }

@@ -6,25 +6,25 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Dashboard</a></div>
                 <div class="breadcrumb-item active"><a
-                            href="{{ url('admin/sipas/suratmasuk') }}">Manage Surat Masuk</a></div>
+                            href="{{ url('admin/sipas/workspace-suratmasuk') }}">Manage Surat Masuk</a></div>
             </div>
         </div>
-        @if(isset($suratmasuk))
-            {!! Form::model($suratmasuk, ['url' => ['admin/sipas/suratmasuk', $suratmasuk->id], 'method' => 'PUT', 'files' => true ]) !!}
+        @if(isset($workspacesuratmasuk))
+            {!! Form::model($workspacesuratmasuk, ['url' => ['admin/sipas/workspace-suratmasuk', $workspacesuratmasuk->id], 'method' => 'PUT', 'files' => true ]) !!}
             {!! Form::hidden('id') !!}
         @else
-            {!! Form::open(['url' => 'admin/sipas/suratmasuk', 'files'=>true]) !!}
+            {!! Form::open(['url' => 'admin/sipas/workspace-suratmasuk', 'files'=>true]) !!}
         @endif
         @csrf
         <div class="section-body">
             <h2 class="section-title">
-                {{ empty($suratmasuk) ? 'Create Surat Masuk' : 'Update Surat Masuk' }}
+                {{ empty($workspacesuratmasuk) ? 'Create Surat Masuk' : 'Update Surat Masuk' }}
             </h2>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>{{ empty($suratmasuk) ? 'Add New Surat Masuk' : 'Update Surat Masuk' }}
+                            <h4>{{ empty($workspacesuratmasuk) ? 'Add New Surat Masuk' : 'Update Surat Masuk' }}
                             </h4>
                         </div>
                         <div class="card-body">
@@ -38,8 +38,8 @@
                                                 <i class="fas fa-calendar"></i>
                                             </div>
                                         </div>
-                                        <input type="text" name="tanggal_terima" id="tanggal_terima" class="form-control datepicker @error('tanggal_terima') is-invalid @enderror @if (!$errors->has('tanggal_terima') && old('tanggal_terima')) is-valid @endif"
-                                               value="{{ old('tanggal_terima', !empty($suratmasuk) ? $suratmasuk->tanggal_terima : null) }}">
+                                        <input type="text" name="tanggal_terima" id="tanggal_terima" class="form-control @error('tanggal_terima') is-invalid @enderror @if (!$errors->has('tanggal_terima') && old('tanggal_terima')) is-valid @endif"
+                                               value="{{ old('tanggal_terima', !empty($workspacesuratmasuk) ? $workspacesuratmasuk->tanggal_terima : null) }}" readonly>
                                     </div>
                                 </div>
                                 @error('tanggal_terima')
@@ -51,7 +51,7 @@
                                 <label class="col-sm-2 col-form-label">Nomor Surat</label>
                                 <div class="col-sm-4">
                                     <input type="text" name="nomor_surat" id="nomor_surat" class="form-control @error('nomor_surat') is-invalid @enderror @if (!$errors->has('nomor_surat') && old('nomor_surat')) is-valid @endif"
-                                           value="{{ old('nomor_surat', !empty($suratmasuk) ? $suratmasuk->nomor_surat : null) }}" readonly>
+                                           value="{{ old('nomor_surat', !empty($workspacesuratmasuk) ? $workspacesuratmasuk->nomor_surat : null) }}">
                                 </div>
                                 @error('nomor_surat')
                                 <div class="invalid-feedback">
@@ -64,7 +64,7 @@
                                 <label class="col-sm-2 col-form-label">Perihal</label>
                                 <div class="col-sm-4">
                                     <input type="text" name="perihal" id="perihal" class="form-control @error('perihal') is-invalid @enderror @if (!$errors->has('perihal') && old('perihal')) is-valid @endif"
-                                           value="{{ old('perihal', !empty($suratmasuk) ? $suratmasuk->perihal : null) }}">
+                                           value="{{ old('perihal', !empty($workspacesuratmasuk) ? $workspacesuratmasuk->perihal : null) }}" readonly>
                                 </div>
                                 @error('perihal')
                                 <div class="invalid-feedback">
@@ -80,8 +80,8 @@
                                                 <i class="fas fa-calendar"></i>
                                             </div>
                                         </div>
-                                        <input type="text" name="tanggal_surat" id="tanggal_surat" class="form-control @error('tanggal_surat') is-invalid @enderror @if (!$errors->has('tanggal_surat') && old('tanggal_surat')) is-valid @endif"
-                                               value="{{ old('tanggal_surat', !empty($suratmasuk) ? $suratmasuk->tanggal_surat : null) }}" readonly>
+                                        <input type="text" name="tanggal_surat" id="tanggal_surat" class="form-control datepicker @error('tanggal_surat') is-invalid @enderror @if (!$errors->has('tanggal_surat') && old('tanggal_surat')) is-valid @endif"
+                                               value="{{ old('tanggal_surat', !empty($workspacesuratmasuk) ? $workspacesuratmasuk->tanggal_surat : null) }}" >
                                     </div>
                                 </div>
                                 @error('tanggal_surat')
@@ -95,7 +95,7 @@
                                 <label class="col-sm-2 col-form-label">Dari</label>
                                 <div class="col-sm-4">
                                     <input type="text" name="dari" id="dari" class="form-control @error('dari') is-invalid @enderror @if (!$errors->has('dari') && old('dari')) is-valid @endif"
-                                           value="{{ old('dari', !empty($suratmasuk) ? $suratmasuk->dari : null) }}">
+                                           value="{{ old('dari', !empty($workspacesuratmasuk) ? $workspacesuratmasuk->dari : null) }}" readonly>
                                 </div>
                                 @error('dari')
                                 <div class="invalid-feedback">
@@ -105,8 +105,13 @@
 
                                 <label class="col-sm-2 col-form-label">Kepada</label>
                                 <div class="col-sm-4">
-                                    {!! Form::select('kepada', $unit, !empty($suratmasuk->disposisi_kode_unit) ? $suratmasuk->disposisi_kode_unit :
-                                    old('kepada'), ['class' => 'form-control', 'placeholder' => '-- Pilih Unit --']) !!}
+                                    {{--{!! Form::select('kepada', $unit, !empty($workspacesuratmasuk->disposisi_kode_unit) ? $workspacesuratmasuk->disposisi_kode_unit :--}}
+                                    {{--old('kepada'), ['class' => 'form-control', 'placeholder' => '-- Pilih Unit --', 'readonly']) !!}--}}
+                                    <select class="form-control" name="kepada" id ="kepada" disabled>
+                                        <option value=" ">
+                                            {{ !empty($workspacesuratmasuk->disposisi_name) ? $workspacesuratmasuk->disposisi_name : '' }}
+                                        </option>
+                                    </select>
                                 </div>
                                 @error('kepada')
                                 <div class="invalid-feedback">
@@ -118,7 +123,7 @@
 
                         <div class="card-footer text-left">
                             <button
-                                    class="btn btn-primary">{{ empty($suratmasuk) ? 'Create' : 'Update' }}</button>
+                                    class="btn btn-primary">Receive</button>
                         </div>
                     </div>
                 </div>

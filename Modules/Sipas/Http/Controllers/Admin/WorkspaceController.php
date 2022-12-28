@@ -30,27 +30,24 @@ class WorkspaceController extends SipasController
 
         $this->suratkeluarRepository = $suratkeluarRepository;
         $this->unitRepository = $unitRepository;
-        
+
         $kategory = collect(
             [
-                ''=> '-- Pilih Kategori --',
-                'HK'=>'Hukum',
-                'KU'=>'Keuangan',
-                'LG'=>'Logistik',
-                'PR'=>'Public Relation',
-                'LP'=>'Pengolahan Data & Pelaporan',
-                'PD'=>'Pendidikan & Pelatihan', 
-                'PS'=>'Personalia', 
-                'UM'=>'Umum', 
-                'LB'=>'Penelitian & Pengembangan', 
-                'PW'=>'Pengawasan'
-                ] 
+                '' => '-- Pilih Kategori --',
+                'HK' => 'Hukum',
+                'KU' => 'Keuangan',
+                'LG' => 'Logistik',
+                'PR' => 'Public Relation',
+                'LP' => 'Pengolahan Data & Pelaporan',
+                'PD' => 'Pendidikan & Pelatihan',
+                'PS' => 'Personalia',
+                'UM' => 'Umum',
+                'LB' => 'Penelitian & Pengembangan',
+                'PW' => 'Pengawasan'
+            ]
         );
 
         $this->data['kategori'] = $kategory;
-
-        // dd($kategory);
-
     }
 
     /**

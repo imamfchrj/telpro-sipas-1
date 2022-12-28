@@ -154,13 +154,21 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
 
     public function updateworkspace($id, $params = [])
     {
-        $suratmasuk = MSuratkeluar::findOrFail($id);
-        $suratmasuk->nomor_surat = $params['nomor_surat'];
-        $suratmasuk->tanggal_surat = $params['tanggal_surat'];
-        $suratmasuk->updated_by = auth()->user()->id;
-        $suratmasuk->updated_by_name = auth()->user()->name;
-        $suratmasuk->status_id = 2;
-        $suratmasuk->status = 'Received';
-        return $suratmasuk->save();
+        $suratkeluar = MSuratkeluar::findOrFail($id);
+
+        // $suratmasuk->nomor_surat = $params['nomor_surat'];
+        // $suratmasuk->tanggal_surat = $params['tanggal_surat'];
+        
+        $suratkeluar->updated_by = auth()->user()->id;
+        $suratkeluar->updated_by_name = auth()->user()->name;
+        
+        if($suratkeluar->status_id == 2){
+            $suratkeluar->status_id == 3;
+            $suratkeluar->status = 'Done';
+        } else {
+            $suratkeluar->status_id = 2;
+            $suratkeluar->status = 'Received';
+        }
+        return $suratkeluar->save();
     }
 }

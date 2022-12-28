@@ -13,7 +13,13 @@
     "admin_menus": [
         {
             "icon": "fa fa-file-archive",
-            "name": "Workspace",
+            "name": "Workspace Surat Masuk",
+            "route": "admin/sipas/workspace-suratmasuk",
+            "permission": "view_sipas-workspace-suratmasuk"
+        },
+        {
+            "icon": "fa fa-file-archive",
+            "name": "Workspace Surat Keluar",
             "route": "admin/sipas/workspace",
             "permission": "view_sipas-workspace"
         },
@@ -36,5 +42,5 @@
             "permission": "view_sipas-ekspor"
         }
     ],
-    "permissions": ["sipas-workspace", "sipas-suratmasuk", "sipas-suratkeluar", "sipas-ekspor"]
+    "permissions": ["sipas-workspace-suratmasuk", "sipas-workspace", "sipas-suratmasuk", "sipas-suratkeluar", "sipas-ekspor"]
 }

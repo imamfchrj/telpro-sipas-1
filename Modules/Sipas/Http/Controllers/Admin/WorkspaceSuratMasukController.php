@@ -6,51 +6,30 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
 use Modules\Sipas\Http\Controllers\SipasController;
-use Modules\Sipas\Http\Requests\Admin\WorkspaceRequest;
+use Modules\Sipas\Http\Requests\Admin\WorkspaceSuratMasukRequest;
 
-use Modules\Sipas\Repositories\Admin\Interfaces\SuratkeluarRepositoryInterface;
+use Modules\Sipas\Repositories\Admin\Interfaces\SuratmasukRepositoryInterface;
 use Modules\Sipas\Repositories\Admin\Interfaces\UnitRepositoryInterface;
 
 use App\Authorizable;
 
-class WorkspaceController extends SipasController
+class WorkspaceSuratMasukController extends SipasController
 {
     use Authorizable;
 
-    private $suratkeluarRepository,
+    private $suratmasukRepository,
         $unitRepository;
 
     public function __construct(
-        SuratkeluarRepositoryInterface $suratkeluarRepository,
+        SuratmasukRepositoryInterface $suratmasukRepository,
         UnitRepositoryInterface $unitRepository
     )
     {
         parent::__construct();
-        $this->data['currentAdminMenu'] = 'suratkeluar';
+        $this->data['currentAdminMenu'] = 'suratmasuk';
 
-        $this->suratkeluarRepository = $suratkeluarRepository;
+        $this->suratmasukRepository = $suratmasukRepository;
         $this->unitRepository = $unitRepository;
-        
-        $kategory = collect(
-            [
-                ''=> '-- Pilih Kategori --',
-                'HK'=>'Hukum',
-                'KU'=>'Keuangan',
-                'LG'=>'Logistik',
-                'PR'=>'Public Relation',
-                'LP'=>'Pengolahan Data & Pelaporan',
-                'PD'=>'Pendidikan & Pelatihan', 
-                'PS'=>'Personalia', 
-                'UM'=>'Umum', 
-                'LB'=>'Penelitian & Pengembangan', 
-                'PW'=>'Pengawasan'
-                ] 
-        );
-
-        $this->data['kategori'] = $kategory;
-
-        // dd($kategory);
-
     }
 
     /**
@@ -61,16 +40,15 @@ class WorkspaceController extends SipasController
     {
         $params = $request->all();
         $options = [
-//            'per_page' => $this->perPage,
             'per_page' => 10,
             'order' => [
                 'id' => 'asc',
             ],
             'filter' => $params,
         ];
-        $this->data['workspaces'] = $this->suratkeluarRepository->findAllworkspace($options);
+        $this->data['workspacesuratmasuks'] = $this->suratmasukRepository->findAllworkspace($options);
         $this->data['filter'] = $params;
-        return view('sipas::admin.workspace.index', $this->data);
+        return view('sipas::admin.workspacesuratmasuk.index', $this->data);
     }
 
     /**
@@ -109,12 +87,12 @@ class WorkspaceController extends SipasController
      */
     public function edit($id)
     {
-        $this->data['workspace'] = $this->suratkeluarRepository->findById($id);
+        $this->data['workspacesuratmasuk'] = $this->suratmasukRepository->findById($id);
 
         $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'id');
         $this->data['unit_id'] = null;
 
-        return view('sipas::admin.workspace.form', $this->data);
+        return view('sipas::admin.workspacesuratmasuk.form', $this->data);
     }
 
     /**
@@ -123,19 +101,17 @@ class WorkspaceController extends SipasController
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(WorkspaceSuratMasukRequest $request, $id)
     {
-        //
-        $params = $request->all();
-        $suratkeluar = $this->suratkeluarRepository->findById($id);
+        $params = $request->validated();
 
-        if ($this->suratkeluarRepository->updateWorkspace($id, $params)) {
-            return redirect('admin/sipas/workspace')
-                ->with('success', 'Surat Keluar telah di terima');
+        if ($this->suratmasukRepository->updateworkspace($id, $params)) {
+            return redirect('admin/sipas/workspace-suratmasuk')
+                ->with('success', 'Surat Masuk has been Received');
         }
 
-        return redirect('admin/sipas/workspace/' . $id . '/edit')
-            ->with('error', 'Surat Keluar tidak dapat diubah');
+        return redirect('admin/sipas/workspace-suratmasuk/' . $id . '/edit')
+            ->with('error', 'Could not received the Surat Masuk');
     }
 
     /**

@@ -2,16 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: IT TELPRO
- * Date: 12/12/2022
- * Time: 00:38
+ * Date: 23/10/2022
+ * Time: 16:59
  */
 
 namespace Modules\Sipas\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
-class SuratmasukRequest extends FormRequest
+class WorkspaceSuratMasukRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -23,10 +22,6 @@ class SuratmasukRequest extends FormRequest
         return array_merge([
             'nomor_surat' => '',
             'tanggal_surat' => '',
-            'tanggal_terima' => '',
-            'perihal' => '',
-            'dari' => '',
-            'kepada' => '',
         ]);
     }
 

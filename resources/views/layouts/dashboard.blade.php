@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="{{ asset('admin/stisla/assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('admin/stisla/assets/css/components.css') }}">
         <link rel="stylesheet" href="{{ asset('admin/stisla/assets/css/custom.css') }}">
+        @stack('css')
         <style>
             .btn-filter {
                 padding: .500rem .75rem;
@@ -71,6 +72,7 @@
         <script src="{{ asset('admin/stisla/assets/js/custom.js') }}"></script>
         <script src="{{ asset('js/pengajuan.js') }}"></script>
         <script src="{{ asset('js/sipas-nomor-surat-baru.js') }}"></script>
+        @stack('script')
         <script>
             $(document).ready(function() {
                 $('.select2').select2();

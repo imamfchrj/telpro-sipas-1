@@ -29,6 +29,27 @@ class WorkspaceController extends SipasController
 
         $this->suratkeluarRepository = $suratkeluarRepository;
         $this->unitRepository = $unitRepository;
+        
+        $kategory = collect(
+            [
+                ''=> '-- Pilih Kategori --',
+                'HK'=>'Hukum',
+                'KU'=>'Keuangan',
+                'LG'=>'Logistik',
+                'PR'=>'Public Relation',
+                'LP'=>'Pengolahan Data & Pelaporan',
+                'PD'=>'Pendidikan & Pelatihan', 
+                'PS'=>'Personalia', 
+                'UM'=>'Umum', 
+                'LB'=>'Penelitian & Pengembangan', 
+                'PW'=>'Pengawasan'
+                ] 
+        );
+
+        $this->data['kategori'] = $kategory;
+
+        // dd($kategory);
+
     }
 
     /**
@@ -98,6 +119,16 @@ class WorkspaceController extends SipasController
     public function update(Request $request, $id)
     {
         //
+        $params = $request->all();
+        $suratkeluar = $this->suratkeluarRepository->findById($id);
+
+        if ($this->suratkeluarRepository->updateWorkspace($id, $params)) {
+            return redirect('admin/sipas/workspace')
+                ->with('success', 'Surat Keluar telah di terima');
+        }
+
+        return redirect('admin/sipas/workspace/' . $id . '/edit')
+            ->with('error', 'Surat Keluar tidak dapat diubah');
     }
 
     /**

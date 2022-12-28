@@ -9,6 +9,7 @@
                             href="{{ url('admin/sipas/workspace') }}">Manage Surat Keluar</a></div>
             </div>
         </div>
+    </div>
         @if(isset($workspace))
             {!! Form::model($workspace, ['url' => ['admin/sipas/workspace', $workspace->id], 'method' => 'PUT', 'files' => true ]) !!}
             {!! Form::hidden('id') !!}
@@ -26,6 +27,48 @@
                         <div class="card-header">
                             <h4>{{ empty($workspace) ? 'Add New Surat Keluar' : 'Update Surat Keluar' }}
                             </h4>
+                        </div>
+                        <div class="card-body">
+                            @include('sipas::admin.shared.flash')
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Kategori Surat</label>
+                                <div class="col-sm-4">
+                                {{ Form::select('kategori', $kategori, null, ['class' => 'form-control', 'id' => 'kategori', 'onchange'=>'klasifikasi_get(this)', 'readonly' ]) }}
+                                    <!-- <select name="kategori" id="kategori" class="form-control"
+                                            onchange="klasifikasi_get(this)" readonly>
+                                        <option value="">-- Pilih Kategori --</option>
+                                        <option value="HK">Hukum</option>
+                                        <option value="KU">Keuangan</option>
+                                        <option value="LG">Logistik</option>
+                                        <option value="PR">Public Relation</option>
+                                        <option value="LP">Pengolahan Data & Pelaporan</option>
+                                        <option value="PD">Pendidikan & Pelatihan</option>
+                                        <option value="PS">Personalia</option>
+                                        <option value="UM">Umum</option>
+                                        <option value="LB">Penelitian & Pengembangan</option>
+                                        <option value="PW">Pengawasan</option>
+                                    </select> -->
+                                    <input type="hidden" name="id"
+                                           value="{{ old('id', !empty($workspace) ? $workspace->id : '') }}">
+                                </div>
+                                @error('kategori')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+
+                                <label class="col-sm-2 col-form-label">Klasifikasi</label>
+                                <div class="col-sm-4">
+                                    <select name="klasifikasi" id="klasifikasi" class="form-control" onchange=""
+                                            readonly>
+                                        <option value="">-- Pilih Klasifikasi --</option>
+                                    </select>
+                                </div>
+                                @error('klasifikasi')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                         </div>
                         <div class="card-body">
                             @include('sipas::admin.shared.flash')
@@ -172,7 +215,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div
         {!! Form::close() !!}
     </section>
+@push('script')
+<script>
+       $('#kategori').trigger('change');
+       $('#klasifikasi').val({{ !empty($workspace) ? $workspace->klasifikasi : '' }});
+</script>
+@endpush
 @endsection

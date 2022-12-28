@@ -29,6 +29,24 @@ class SuratkeluarController extends SipasController
 
         $this->suratkeluarRepository = $suratkeluarRepository;
         $this->unitRepository = $unitRepository;
+
+        $kategory = collect(
+            [
+                '' => '-- Pilih Kategori --',
+                'HK' => 'Hukum',
+                'KU' => 'Keuangan',
+                'LG' => 'Logistik',
+                'PR' => 'Public Relation',
+                'LP' => 'Pengolahan Data & Pelaporan',
+                'PD' => 'Pendidikan & Pelatihan',
+                'PS' => 'Personalia',
+                'UM' => 'Umum',
+                'LB' => 'Penelitian & Pengembangan',
+                'PW' => 'Pengawasan'
+            ]
+        );
+
+        $this->data['kategori'] = $kategory;
     }
 
     /**
@@ -97,7 +115,7 @@ class SuratkeluarController extends SipasController
     public function edit($id)
     {
         $this->data['suratkeluar'] = $this->suratkeluarRepository->findById($id);
-        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'kode_unit_sap');
+        $this->data['unit'] = $this->unitRepository->findAll()->pluck('unit', 'id');
         $this->data['unit_id'] = null;
 
         return view('sipas::admin.suratkeluar.form', $this->data);

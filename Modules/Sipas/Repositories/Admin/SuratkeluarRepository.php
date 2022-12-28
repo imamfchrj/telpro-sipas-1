@@ -131,7 +131,18 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         $perPage = $options['per_page'] ?? null;
         $orderByFields = $options['order'] ?? [];
 
-        $suratmasuk = (new MSuratkeluar())->where('id_unit', auth()->user()->group)->where('status_id', 1)->orwhere('status_id', 2);
+//        $suratmasuk = (new MSuratkeluar())->where('id_unit', auth()->user()->group)->where('status_id', 1)->orwhere('status_id', 2);
+        $suratmasuk = (new MSuratkeluar())->where(
+            function ($query) {
+                $query->whereIn('status_id', array(1, 2))
+                    ->where('id_unit', auth()->user()->group);
+            }
+        )->orWhere(
+            function ($query) {
+                $query->whereIn('status_id', array(3))
+                    ->where('dari_id_unit', auth()->user()->group);
+            }
+        );
 
         if ($orderByFields) {
             foreach ($orderByFields as $field => $sort) {
@@ -158,12 +169,12 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
 
         // $suratmasuk->nomor_surat = $params['nomor_surat'];
         // $suratmasuk->tanggal_surat = $params['tanggal_surat'];
-        
+
         $suratkeluar->updated_by = auth()->user()->id;
         $suratkeluar->updated_by_name = auth()->user()->name;
-        
-        if($suratkeluar->status_id == 2){
-            $suratkeluar->status_id == 3;
+
+        if ($suratkeluar->status_id == 2) {
+            $suratkeluar->status_id = 3;
             $suratkeluar->status = 'Done';
         } else {
             $suratkeluar->status_id = 2;

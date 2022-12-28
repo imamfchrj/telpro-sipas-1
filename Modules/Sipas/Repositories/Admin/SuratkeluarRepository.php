@@ -113,4 +113,51 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         $suratkeluar = MSuratkeluar::findOrFail($id);
         return $suratkeluar->forceDelete();
     }
+
+    public function findAllworkspace($options = [])
+    {
+        $perPage = $options['per_page'] ?? null;
+        $orderByFields = $options['order'] ?? [];
+
+        $suratmasuk = (new MSuratkeluar())->where('id_unit', auth()->user()->group)->where('status_id', 1)->orwhere('status_id', 2);
+
+        if ($orderByFields) {
+            foreach ($orderByFields as $field => $sort) {
+                $suratmasuk = $suratmasuk->orderBy($field, $sort);
+            }
+        }
+
+        if (!empty($options['filter']['q'])) {
+            $suratmasuk = $suratmasuk->where(function ($query) use ($options) {
+                $query->where('perihal', 'LIKE', "%{$options['filter']['q']}%");
+            });
+        }
+
+        if ($perPage) {
+            return $suratmasuk->paginate($perPage);
+        }
+
+        return $suratmasuk->get();
+    }
+
+    public function updateworkspace($id, $params = [])
+    {
+        $suratkeluar = MSuratkeluar::findOrFail($id);
+
+        // $suratmasuk->nomor_surat = $params['nomor_surat'];
+        // $suratmasuk->tanggal_surat = $params['tanggal_surat'];
+        
+        $suratkeluar->updated_by = auth()->user()->id;
+        $suratkeluar->updated_by_name = auth()->user()->name;
+        
+        if($suratkeluar->status_id == 2){
+            $suratkeluar->status_id == 3;
+            $suratkeluar->status = 'Done';
+        } else {
+            $suratkeluar->status_id = 2;
+            $suratkeluar->status = 'Received';
+        }
+
+        return $suratkeluar->save();
+    }
 }

@@ -9,53 +9,67 @@
                     href="{{ url('admin/sipas/suratkeluar') }}">Manage Surat Keluar</a></div>
         </div>
     </div>
-    @if(isset($suratkeluar))
-    {!! Form::model($suratkeluar, ['url' => ['admin/sipas/suratkeluar', $suratkeluar->id], 'method' => 'PUT', 'files' => true ]) !!}
-    {!! Form::hidden('id') !!}
-    @else
-    {!! Form::open(['url' => 'admin/sipas/suratkeluar', 'files'=>true]) !!}
-    @endif
-    @csrf
-    <div class="section-body">
-        <h2 class="section-title">
-            {{ empty($suratkeluar) ? 'Create Surat Keluar' : 'Update Surat Keluar' }}
-        </h2>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>{{ empty($suratkeluar) ? 'Add New Surat Keluar' : 'Update Surat Keluar' }}
-                        </h4>
-                    </div>
-                    {{--<input type="hidden" name="dibuatOlehSk" id="dibuatOlehSk" value="<?php echo $profilename ?>" readonly>--}}
-                    {{--<input type="hidden" name="dibuatPadaSk" id="dibuatPadaSk" value="<?php echo date('d/m/Y H:i') ?>" readonly>--}}
-                    <div class="card-body">
-                        @include('sipas::admin.shared.flash')
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Kategori Surat</label>
-                            <div class="col-sm-4">
-                                {{--<input type="text" name="name"--}}
-                                    {{--class="form-control @error('name') is-invalid @enderror @if (!$errors->has('name') && old('name')) is-valid @endif"--}}
-                                    {{--value="{{ old('name', !empty($suratkeluar) ? $suratkeluar->name : '') }}">--}}
-                                <select name="kategoriSk" id="kategoriSk" class="form-control" onchange="klasifikasi(this)">
-                                    <option value="">- Pilih -</option>
-                                    <option value="HK">Hukum</option>
-                                    <option value="KU">Keuangan</option>
-                                    <option value="LG">Logistik</option>
-                                    <option value="PR">Public Relation</option>
-                                    <option value="LP">Pengolahan Data & Pelaporan</option>
-                                    <option value="PD">Pendidikan & Pelatihan</option>
-                                    <option value="PS">Personalia</option>
-                                    <option value="UM">Umum</option>
-                                    <option value="LB">Penelitian & Pengembangan</option>
-                                    <option value="PW">Pengawasan</option>
-                                </select>
-                                <input type="hidden" name="id"
-                                    value="{{ old('id', !empty($suratkeluar) ? $suratkeluar->id : '') }}">
-                            </div>
-                            @error('kategoriSk')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+   
+        @if(isset($workspace))
+            {!! Form::model($workspace, ['url' => ['admin/sipas/workspace', $workspace->id], 'method' => 'PUT', 'files' => true ]) !!}
+            {!! Form::hidden('id') !!}
+        @else
+            {!! Form::open(['url' => 'admin/sipas/workspace', 'files'=>true]) !!}
+        @endif
+        @csrf
+        <div class="section-body">
+            <h2 class="section-title">
+                {{ empty($workspace) ? 'Create Surat Keluar' : 'Update Surat Keluar' }}
+            </h2>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>{{ empty($workspace) ? 'Add New Surat Keluar' : 'Update Surat Keluar' }}
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            @include('sipas::admin.shared.flash')
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Kategori Surat</label>
+                                <div class="col-sm-4">
+                                {{ Form::select('kategori', $kategori, null, ['class' => 'form-control', 'id' => 'kategori', 'onchange'=>'klasifikasi_get(this)', 'readonly' ]) }}
+                                    <!-- <select name="kategori" id="kategori" class="form-control"
+                                            onchange="klasifikasi_get(this)" readonly>
+                                        <option value="">-- Pilih Kategori --</option>
+                                        <option value="HK">Hukum</option>
+                                        <option value="KU">Keuangan</option>
+                                        <option value="LG">Logistik</option>
+                                        <option value="PR">Public Relation</option>
+                                        <option value="LP">Pengolahan Data & Pelaporan</option>
+                                        <option value="PD">Pendidikan & Pelatihan</option>
+                                        <option value="PS">Personalia</option>
+                                        <option value="UM">Umum</option>
+                                        <option value="LB">Penelitian & Pengembangan</option>
+                                        <option value="PW">Pengawasan</option>
+                                    </select> -->
+                                    <input type="hidden" name="id"
+                                           value="{{ old('id', !empty($workspace) ? $workspace->id : '') }}">
+                                </div>
+                                @error('kategori')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+
+                                <label class="col-sm-2 col-form-label">Klasifikasi</label>
+                                <div class="col-sm-4">
+                                    <select name="klasifikasi" id="klasifikasi" class="form-control" onchange=""
+                                            readonly>
+                                        <option value="">-- Pilih Klasifikasi --</option>
+                                    </select>
+                                </div>
+                                @error('klasifikasi')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+>>>>>>> Stashed changes
                             </div>
                             @enderror
 
@@ -170,7 +184,14 @@
                 </div>
             </div>
         </div>
-    </div>
-    {!! Form::close() !!}
-</section>
+
+        {!! Form::close() !!}
+    </section>
+@push('script')
+<script>
+       $('#kategori').trigger('change');
+       $('#klasifikasi').val({{ !empty($workspace) ? $workspace->klasifikasi : '' }});
+</script>
+@endpush
+
 @endsection

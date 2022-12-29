@@ -76,8 +76,6 @@ class DashboardController extends Controller
             echo $format;
         });
 
-
-
         $this->data['jib'] = $jib;
         $this->data['rev'] = $rev;
         $this->data['nilai_capex'] = $nilai_capex;
@@ -93,6 +91,13 @@ class DashboardController extends Controller
         $this->data['doc_closed'] = $doc_closed;
         $this->data['doc_total'] = $doc_total;
         $this->data['doc_avg'] = $doc_avg;
+
+
+        $suratmasuk = DB::table('sipas_suratmasuk')->count();
+        $suratkeluar = DB::table('sipas_suratkeluar')->count();
+
+        $this->data['suratmasuk'] = $suratmasuk;
+        $this->data['suratkeluar'] = $suratkeluar;
 
         $this->data['currentAdminMenu'] = 'dashboard';
         return view('admin.dashboard.index', $this->data);

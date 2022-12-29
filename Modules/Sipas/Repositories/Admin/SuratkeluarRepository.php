@@ -173,13 +173,17 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         $suratkeluar->updated_by = auth()->user()->id;
         $suratkeluar->updated_by_name = auth()->user()->name;
 
-        if ($suratkeluar->status_id == 2) {
+        if ($suratkeluar->status_id == 1) {
+            $suratkeluar->status_id = 2;
+            $suratkeluar->status = 'Received';
+        } elseif ($suratkeluar->status_id == 2) {
             $suratkeluar->status_id = 3;
             $suratkeluar->status = 'Done';
         } else {
-            $suratkeluar->status_id = 2;
-            $suratkeluar->status = 'Received';
+            $suratkeluar->status_id = 4;
+            $suratkeluar->status = 'Closed';
         }
+
         return $suratkeluar->save();
     }
 }

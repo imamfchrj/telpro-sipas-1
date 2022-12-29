@@ -167,7 +167,7 @@
                                     @elseif ($workspace->status_id == 2)
                                         Done
                                     @else
-                                        Submit
+                                        Submit to Closed
                                     @endif
                                 </button>
                             </div>

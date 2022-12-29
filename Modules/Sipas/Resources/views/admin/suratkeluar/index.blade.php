@@ -28,6 +28,7 @@
                                     <th>Kepada</th>
                                     <th>Perihal</th>
                                     <th>Status</th>
+                                    <th>File</th>
                                     <th>Action</th>
                                     </thead>
                                     <tbody>
@@ -41,6 +42,14 @@
                                             <td>{{ $suratkeluar->kepada }}</td>
                                             <td>{{ $suratkeluar->perihal }}</td>
                                             <td>{{ $suratkeluar->status }}</td>
+                                            <td>
+                                            @if($suratkeluar->status_id == 4)
+                                            <a class="btn btn-sm btn-outline-secondary"
+                                                       href="{{ url('admin/sipas/suratkeluar/'. $suratkeluar->id .'/download')}}"><i
+                                                                class="far fa-save"></i>
+                                                    </a>
+                                                    @endif
+                                            </td>
                                             <td>
                                                 {{--@can('view_sipas-suratkeluar')--}}
                                                     {{--<a class="btn btn-sm btn-primary"--}}

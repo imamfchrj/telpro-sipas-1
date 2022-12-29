@@ -159,7 +159,6 @@
                             </div>
 
                             <div class="card-footer text-left">
-
                                 <button
                                         class="btn btn-primary">
                                     @if ($workspace->status_id == 1)

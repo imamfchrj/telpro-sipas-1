@@ -168,4 +168,10 @@
         </div>
         {!! Form::close() !!}
     </section>
+    @push('script')
+        <script>
+            $('#kategori').trigger('change');
+            $('#klasifikasi').val({{ !empty($suratkeluar) ? $suratkeluar->klasifikasi : '' }});
+        </script>
+    @endpush
 @endsection

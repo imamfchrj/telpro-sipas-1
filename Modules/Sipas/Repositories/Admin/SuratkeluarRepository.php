@@ -8,7 +8,8 @@
 
 namespace Modules\Sipas\Repositories\Admin;
 
-use DB;
+use App\Models\User;
+use Illuminate\Support\Facades\Http;
 use Modules\Sipas\Entities\MSuratkeluar;
 use Modules\Sipas\Entities\MUnit;
 use Modules\Sipas\Repositories\Admin\Interfaces\SuratkeluarRepositoryInterface;
@@ -50,6 +51,15 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
             return $suratkeluar->paginate($perPage);
         }
 
+        // if ($suratkeluar->count() != 0) {
+        //     $file_surat_keluar = $suratkeluar->last()->getMedia('file_surat_keluar');
+        // } else {
+        //     $file_surat_keluar = null;
+        // }
+
+        // $data_surat_keluar = $suratkeluar->get();
+
+        // return compact(['file_surat_keluar', 'data_surat_keluar']);
         return $suratkeluar->get();
     }
 
@@ -57,7 +67,7 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
     {
 
         // 001/UM-000/GSD-2a000/I/2022
-        $time = strtotime($params ['tanggal_surat']);
+        $time = strtotime($params['tanggal_surat']);
         $bulan = date('m', $time);
         $tahun = date('Y', $time);
 
@@ -83,7 +93,6 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
 //        dd($no_surat);
 //        exit;
 
-
         // Insert Customer
         $suratkeluar = new MSuratkeluar();
         $suratkeluar->kategori = $params['kategori'];
@@ -94,7 +103,7 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         $suratkeluar->tahun = $tahun;
         $suratkeluar->nomor = $new_number;
         $suratkeluar->nomor_surat = $no_surat;
-        $suratkeluar->tanggal_surat = $params ['tanggal_surat'];
+        $suratkeluar->tanggal_surat = $params['tanggal_surat'];
         $suratkeluar->dari = $params['dari'];
         $suratkeluar->dari_id_unit = $params['dari_id_unit'];
         $suratkeluar->dari_kode_unit = $params['dari_kode_unit'];
@@ -173,13 +182,84 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         $suratkeluar->updated_by = auth()->user()->id;
         $suratkeluar->updated_by_name = auth()->user()->name;
 
-        if ($suratkeluar->status_id == 2) {
-            $suratkeluar->status_id = 3;
-            $suratkeluar->status = 'Done';
-        } else {
-            $suratkeluar->status_id = 2;
-            $suratkeluar->status = 'Received';
+        switch ($suratkeluar->status_id) {
+            case 2:
+                $suratkeluar->status_id = 3;
+                $suratkeluar->status = 'Done';
+                // $this->send_notifikasi($suratkeluar);
+                // $this->send_wa();
+                break;
+            case 3:
+                $suratkeluar->status_id = 4;
+                $suratkeluar->status = 'Closed';
+
+                //Upload File
+                if (isset($params['lampiranSk'])) {
+                    $suratkeluar->addMediaFromRequest('lampiranSk')->toMediaCollection('file_surat_keluar');
+                }
+
+                break;
+            default:
+                $suratkeluar->status_id = 2;
+                $suratkeluar->status = 'Received';
+                break;
         }
+
+        // if ($suratkeluar->status_id == 2) {
+        //     $suratkeluar->status_id = 3;
+        //     $suratkeluar->status = 'Done';
+        // } else {
+        //     $suratkeluar->status_id = 2;
+        //     $suratkeluar->status = 'Received';
+        // }
+
         return $suratkeluar->save();
     }
+
+    public function send_notifikasi($params)
+    {
+        $user_unit = User::find($params->created_by);
+        $url = 'https://wa01.ocatelkom.co.id/api/v2/push/message';
+        $token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiYXBwbGljYXRpb24iOiI2MzYzNzU5ZTBjOTQ5NDAwMjE3NjM0YTkiLCJpYXQiOjE1MTYyMzkwMjJ9.dCsEsnctWvZfsu9OGYGKCQW5u0-oRAnAI7806-4Dl0ea57kgggTY7rC5pJYwtfabOybcM5loP95Bam_CTkQ4l2Nm_yxiRBDTT-xfq8uC1JwKclZu0ZS2ekjO-MXuk08tntnXCpi-gTVvAuYno1QaFgpsMFed6HuQB60IlHyxGH9CTnA7Nsfyc0vCI2KH9px2MhwIOWTsN8p_GRE-yk80eOVnAwMGQ3JoMVpV0bbu9Bs5xAyQVprGINAwfja_VhkemEf4Ad9ZOR1Y-LDtI_7-qRVgPZAs1bHaqbPhrp3BSHal4CUauXfHFLBsAar7-7KWZNYgcK7KCRESwTIucPcfmQ';
+        $body = '{
+                "phone_number": "' . $user_unit->nomor_tlp . '",
+                "message": {
+                    "type": "template",
+                    "template": {
+                        "template_code_id": "a1b52102_7d78_4d09_9e95_0cec44bea8c7:notifikasi_surat",
+                        "payload": [
+                            {
+                                "position": "header",
+                                "parameters": [
+                                    {
+                                        "type": "image",
+                                        "image": {
+                                                "url": "https://storage.ocatelkom.co.id/image/bUU7Yg2faks6qPm22N2M16112022jpeg.jpeg"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "position": "body",
+                                "parameters": [
+                                    {
+                                        "type": "text",
+                                        "text": "' . $user_unit->name . '"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "' . $params->nomor_surat . '"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }';
+        $body = str_replace(PHP_EOL, '', $body);
+        dd(json_encode($body));
+        $response = Http::withToken($token)->withBody($body, 'application/json')->post($url);
+        dd($response);
+    }
+
 }

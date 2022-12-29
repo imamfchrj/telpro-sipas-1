@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Modules\Sipas\Entities\MSuratkeluar;
 use Modules\Sipas\Entities\MUnit;
 use Modules\Sipas\Repositories\Admin\Interfaces\SuratkeluarRepositoryInterface;
+use Illuminate\Support\Str;
 
 class SuratkeluarRepository implements SuratkeluarRepositoryInterface
 {
@@ -186,7 +187,7 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
             case 2:
                 $suratkeluar->status_id = 3;
                 $suratkeluar->status = 'Done';
-                // $this->send_notifikasi($suratkeluar);
+                $this->send_notifikasi($suratkeluar);
                 // $this->send_wa();
                 break;
             case 3:
@@ -222,11 +223,11 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         $url = 'https://wa01.ocatelkom.co.id/api/v2/push/message';
         $token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiYXBwbGljYXRpb24iOiI2MzYzNzU5ZTBjOTQ5NDAwMjE3NjM0YTkiLCJpYXQiOjE1MTYyMzkwMjJ9.dCsEsnctWvZfsu9OGYGKCQW5u0-oRAnAI7806-4Dl0ea57kgggTY7rC5pJYwtfabOybcM5loP95Bam_CTkQ4l2Nm_yxiRBDTT-xfq8uC1JwKclZu0ZS2ekjO-MXuk08tntnXCpi-gTVvAuYno1QaFgpsMFed6HuQB60IlHyxGH9CTnA7Nsfyc0vCI2KH9px2MhwIOWTsN8p_GRE-yk80eOVnAwMGQ3JoMVpV0bbu9Bs5xAyQVprGINAwfja_VhkemEf4Ad9ZOR1Y-LDtI_7-qRVgPZAs1bHaqbPhrp3BSHal4CUauXfHFLBsAar7-7KWZNYgcK7KCRESwTIucPcfmQ';
         $body = '{
-                "phone_number": "' . $user_unit->nomor_tlp . '",
+                "phone_number": "'.$user_unit->nomor_tlp.'",
                 "message": {
                     "type": "template",
                     "template": {
-                        "template_code_id": "a1b52102_7d78_4d09_9e95_0cec44bea8c7:notifikasi_surat",
+                        "template_code_id": "a1b52102_7d78_4d09_9e95_0cec44bea8c7:template_notifikasi_surat",
                         "payload": [
                             {
                                 "position": "header",
@@ -244,11 +245,11 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
                                 "parameters": [
                                     {
                                         "type": "text",
-                                        "text": "' . $user_unit->name . '"
+                                        "text": "'.$user_unit->name.'"
                                     },
                                     {
                                         "type": "text",
-                                        "text": "' . $params->nomor_surat . '"
+                                        "text": "'.$params->nomor_surat.'"
                                     }
                                 ]
                             }
@@ -256,10 +257,9 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
                     }
                 }
             }';
-        $body = str_replace(PHP_EOL, '', $body);
-        dd(json_encode($body));
-        $response = Http::withToken($token)->withBody($body, 'application/json')->post($url);
-        dd($response);
+
+            $body = Str::replace("\n", '', $body);
+            $response = Http::withOptions(['verify' => false])->withToken($token)->withBody($body, 'application/json')->post($url);
     }
 
 }

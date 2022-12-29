@@ -213,7 +213,7 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         //     $suratkeluar->status_id = 2;
         //     $suratkeluar->status = 'Received';
         // }
-
+        
         return $suratkeluar->save();
     }
 

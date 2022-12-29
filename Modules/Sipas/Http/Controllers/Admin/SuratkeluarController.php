@@ -2,16 +2,15 @@
 
 namespace Modules\Sipas\Http\Controllers\Admin;
 
+use App\Authorizable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-
 use Modules\Sipas\Http\Controllers\SipasController;
 use Modules\Sipas\Http\Requests\Admin\SuratkeluarRequest;
-
 use Modules\Sipas\Repositories\Admin\Interfaces\SuratkeluarRepositoryInterface;
 use Modules\Sipas\Repositories\Admin\Interfaces\UnitRepositoryInterface;
-
-use App\Authorizable;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\Support\MediaStream;
 
 class SuratkeluarController extends SipasController
 {
@@ -42,7 +41,7 @@ class SuratkeluarController extends SipasController
                 'PS' => 'Personalia',
                 'UM' => 'Umum',
                 'LB' => 'Penelitian & Pengembangan',
-                'PW' => 'Pengawasan'
+                'PW' => 'Pengawasan',
             ]
         );
 
@@ -64,7 +63,14 @@ class SuratkeluarController extends SipasController
             ],
             'filter' => $params,
         ];
+
+        // $suratkeluar = $this->suratkeluarRepository->findAll($options);
+
         $this->data['suratkeluars'] = $this->suratkeluarRepository->findAll($options);
+
+        // $this->data['suratkeluars'] = $suratkeluar['data_surat_keluar'];
+        // $this->data['file_surat_keluar'] = $suratkeluar['file_surat_keluar'];
+
         $this->data['filter'] = $params;
         return view('sipas::admin.suratkeluar.index', $this->data);
     }
@@ -155,5 +161,12 @@ class SuratkeluarController extends SipasController
         }
 
         return redirect('admin/sipas/suratkeluar')->with('error', 'Could not delete the Anggaran.');
+    }
+
+    public function download($uid)
+    {
+        $filedownload = Media::where('model_id', $uid)->first();
+
+        return response()->download($filedownload->getPath());
     }
 }

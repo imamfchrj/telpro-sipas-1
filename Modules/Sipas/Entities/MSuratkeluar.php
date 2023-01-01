@@ -7,13 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\File;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class MSuratkeluar extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, Sortable;
 
     protected $fillable = [
 
+    ];
+
+    public $sortable = [
+        'kategori', 'nomor_surat', 'tanggal_surat', 'dari', 'kepada','perihal','status'
     ];
 
     /**
@@ -24,7 +30,7 @@ class MSuratkeluar extends Model implements HasMedia
 
     protected $table = 'sipas_suratkeluar';
     protected $primaryKey = 'id';
-    
+
     protected static function newFactory()
     {
         return \Modules\Sipas\Database\factories\MSuratkeluarFactory::new();

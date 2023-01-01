@@ -46,7 +46,7 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
         }
 
         if ($perPage) {
-            return $suratmasuk->paginate($perPage);
+            return $suratmasuk->sortable()->orderBy('id','DESC')->paginate($perPage);
         }
 
         return $suratmasuk->get();

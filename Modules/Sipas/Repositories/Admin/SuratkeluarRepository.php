@@ -49,7 +49,7 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         }
 
         if ($perPage) {
-            return $suratkeluar->paginate($perPage);
+            return $suratkeluar->sortable()->orderBy('id','DESC')->paginate($perPage);
         }
 
         // if ($suratkeluar->count() != 0) {

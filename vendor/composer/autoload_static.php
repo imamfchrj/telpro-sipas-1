@@ -144,6 +144,10 @@ class ComposerStaticInita7282f22309e0b50c5a0c83c5b008d15
             'Laravel\\SerializableClosure\\' => 28,
             'Laravel\\Fortify\\' => 16,
         ),
+        'K' => 
+        array (
+            'Kyslik\\ColumnSortable\\' => 22,
+        ),
         'I' => 
         array (
             'Intervention\\Image\\' => 19,
@@ -490,6 +494,10 @@ class ComposerStaticInita7282f22309e0b50c5a0c83c5b008d15
         'Laravel\\Fortify\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/fortify/src',
+        ),
+        'Kyslik\\ColumnSortable\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable',
         ),
         'Intervention\\Image\\' => 
         array (
@@ -3205,6 +3213,10 @@ class ComposerStaticInita7282f22309e0b50c5a0c83c5b008d15
         'Intervention\\Image\\Point' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Point.php',
         'Intervention\\Image\\Response' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Response.php',
         'Intervention\\Image\\Size' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Size.php',
+        'Kyslik\\ColumnSortable\\ColumnSortableServiceProvider' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/ColumnSortableServiceProvider.php',
+        'Kyslik\\ColumnSortable\\Exceptions\\ColumnSortableException' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/Exceptions/ColumnSortableException.php',
+        'Kyslik\\ColumnSortable\\Sortable' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/Sortable.php',
+        'Kyslik\\ColumnSortable\\SortableLink' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/SortableLink.php',
         'Laravel\\Fortify\\Actions\\AttemptToAuthenticate' => __DIR__ . '/..' . '/laravel/fortify/src/Actions/AttemptToAuthenticate.php',
         'Laravel\\Fortify\\Actions\\CompletePasswordReset' => __DIR__ . '/..' . '/laravel/fortify/src/Actions/CompletePasswordReset.php',
         'Laravel\\Fortify\\Actions\\ConfirmPassword' => __DIR__ . '/..' . '/laravel/fortify/src/Actions/ConfirmPassword.php',
@@ -3951,9 +3963,27 @@ class ComposerStaticInita7282f22309e0b50c5a0c83c5b008d15
         'Modules\\Master\\Repositories\\Admin\\SegmentRepository' => __DIR__ . '/../..' . '/Modules/Master/Repositories/Admin/SegmentRepository.php',
         'Modules\\Master\\Repositories\\Admin\\StatusRepository' => __DIR__ . '/../..' . '/Modules/Master/Repositories/Admin/StatusRepository.php',
         'Modules\\Sipas\\Database\\Seeders\\SipasDatabaseSeeder' => __DIR__ . '/../..' . '/Modules/Sipas/Database/Seeders/SipasDatabaseSeeder.php',
+        'Modules\\Sipas\\Entities\\MSuratkeluar' => __DIR__ . '/../..' . '/Modules/Sipas/Entities/MSuratkeluar.php',
+        'Modules\\Sipas\\Entities\\MSuratmasuk' => __DIR__ . '/../..' . '/Modules/Sipas/Entities/MSuratmasuk.php',
+        'Modules\\Sipas\\Entities\\MUnit' => __DIR__ . '/../..' . '/Modules/Sipas/Entities/MUnit.php',
+        'Modules\\Sipas\\Http\\Controllers\\Admin\\EksporController' => __DIR__ . '/../..' . '/Modules/Sipas/Http/Controllers/Admin/EksporController.php',
+        'Modules\\Sipas\\Http\\Controllers\\Admin\\SuratkeluarController' => __DIR__ . '/../..' . '/Modules/Sipas/Http/Controllers/Admin/SuratkeluarController.php',
+        'Modules\\Sipas\\Http\\Controllers\\Admin\\SuratmasukController' => __DIR__ . '/../..' . '/Modules/Sipas/Http/Controllers/Admin/SuratmasukController.php',
+        'Modules\\Sipas\\Http\\Controllers\\Admin\\WorkspaceController' => __DIR__ . '/../..' . '/Modules/Sipas/Http/Controllers/Admin/WorkspaceController.php',
+        'Modules\\Sipas\\Http\\Controllers\\Admin\\WorkspaceSuratMasukController' => __DIR__ . '/../..' . '/Modules/Sipas/Http/Controllers/Admin/WorkspaceSuratMasukController.php',
         'Modules\\Sipas\\Http\\Controllers\\SipasController' => __DIR__ . '/../..' . '/Modules/Sipas/Http/Controllers/SipasController.php',
+        'Modules\\Sipas\\Http\\Requests\\Admin\\SuratkeluarRequest' => __DIR__ . '/../..' . '/Modules/Sipas/Http/Requests/Admin/SuratkeluarRequest.php',
+        'Modules\\Sipas\\Http\\Requests\\Admin\\SuratmasukRequest' => __DIR__ . '/../..' . '/Modules/Sipas/Http/Requests/Admin/SuratmasukRequest.php',
+        'Modules\\Sipas\\Http\\Requests\\Admin\\WorkspaceRequest' => __DIR__ . '/../..' . '/Modules/Sipas/Http/Requests/Admin/WorkspaceRequest.php',
+        'Modules\\Sipas\\Http\\Requests\\Admin\\WorkspaceSuratMasukRequest' => __DIR__ . '/../..' . '/Modules/Sipas/Http/Requests/Admin/WorkspaceSuratMasukRequest.php',
         'Modules\\Sipas\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/Modules/Sipas/Providers/RouteServiceProvider.php',
         'Modules\\Sipas\\Providers\\SipasServiceProvider' => __DIR__ . '/../..' . '/Modules/Sipas/Providers/SipasServiceProvider.php',
+        'Modules\\Sipas\\Repositories\\Admin\\Interfaces\\SuratkeluarRepositoryInterface' => __DIR__ . '/../..' . '/Modules/Sipas/Repositories/Admin/Interfaces/SuratkeluarRepositoryInterface.php',
+        'Modules\\Sipas\\Repositories\\Admin\\Interfaces\\SuratmasukRepositoryInterface' => __DIR__ . '/../..' . '/Modules/Sipas/Repositories/Admin/Interfaces/SuratmasukRepositoryInterface.php',
+        'Modules\\Sipas\\Repositories\\Admin\\Interfaces\\UnitRepositoryInterface' => __DIR__ . '/../..' . '/Modules/Sipas/Repositories/Admin/Interfaces/UnitRepositoryInterface.php',
+        'Modules\\Sipas\\Repositories\\Admin\\SuratkeluarRepository' => __DIR__ . '/../..' . '/Modules/Sipas/Repositories/Admin/SuratkeluarRepository.php',
+        'Modules\\Sipas\\Repositories\\Admin\\SuratmasukRepository' => __DIR__ . '/../..' . '/Modules/Sipas/Repositories/Admin/SuratmasukRepository.php',
+        'Modules\\Sipas\\Repositories\\Admin\\UnitRepository' => __DIR__ . '/../..' . '/Modules/Sipas/Repositories/Admin/UnitRepository.php',
         'Monolog\\Attribute\\AsMonologProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Attribute/AsMonologProcessor.php',
         'Monolog\\DateTimeImmutable' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/DateTimeImmutable.php',
         'Monolog\\ErrorHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ErrorHandler.php',

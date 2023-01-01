@@ -42,7 +42,7 @@ class WorkspaceSuratMasukController extends SipasController
         $options = [
             'per_page' => 10,
             'order' => [
-                'id' => 'asc',
+//                'id' => 'asc',
             ],
             'filter' => $params,
         ];

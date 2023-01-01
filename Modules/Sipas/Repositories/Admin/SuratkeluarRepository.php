@@ -167,7 +167,7 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         }
 
         if ($perPage) {
-            return $suratmasuk->paginate($perPage);
+            return $suratmasuk->sortable()->orderBy('id','DESC')->paginate($perPage);
         }
 
         return $suratmasuk->get();

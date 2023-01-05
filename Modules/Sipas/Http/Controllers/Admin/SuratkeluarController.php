@@ -165,7 +165,8 @@ class SuratkeluarController extends SipasController
 
     public function download($uid)
     {
-        $filedownload = Media::where('model_id', $uid)->first();
+//        $filedownload = Media::where('model_id', $uid)->first();
+        $filedownload = Media::where('model_id', $uid)->latest()->first();
 
         return response()->download($filedownload->getPath());
     }

@@ -92,7 +92,8 @@
                                 <div class="col-sm-4">
                                     <input type="text" name="dari"
                                            class="form-control @error('dari') is-invalid @enderror @if (!$errors->has('dari') && old('dari')) is-valid @endif"
-                                           value="{{ old('dari', !empty($suratkeluar) ? $suratkeluar->dari : $unit_by_userId->unit) }}" readonly>
+                                           value="{{ old('dari', !empty($suratkeluar) ? $suratkeluar->dari : $unit_by_userId->unit) }}"
+                                           readonly>
                                     <input type="hidden" name="dari_id_unit"
                                            value="{{ old('dari_id_unit', !empty($suratkeluar) ? $suratkeluar->dari_id_unit : $unit_by_userId->id) }}">
                                     <input type="hidden" name="dari_kode_unit"
@@ -130,6 +131,31 @@
                                 </div>
                                 @enderror
 
+                                {{--<label class="col-sm-2 col-form-label">Lampiran</label>--}}
+                                {{--<div class="col-sm-4">--}}
+                                    {{--@if (!empty($pengajuan) && $pengajuan->featured_image)--}}
+                                        {{--<img src="{{ $pengajuan->featured_image }}"--}}
+                                             {{--alt="{{ $pengajuan->featured_image_caption }}"--}}
+                                             {{--class="img-fluid img-thumbnail"/>--}}
+                                    {{--@endif--}}
+                                    {{--<input type="file" name="lampiranSk" class="form-control"/>--}}
+                                {{--</div>--}}
+                                {{--@error('lampiranSk')--}}
+                                {{--<div class="invalid-feedback">--}}
+                                    {{--{{ $message }}--}}
+                                {{--</div>--}}
+                                {{--@enderror--}}
+                                <label class="col-sm-2 col-form-label">Lampiran</label>
+                                <div class="col-sm-4">
+                                    <input type="file" name="lampiranSk" class="form-control @error('lampiranSk') is-invalid @enderror @if (!$errors->has('lampiranSk') && old('lampiranSk')) is-valid @endif"/>
+                                </div>
+                                @error('lampiranSk')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Keterangan</label>
                                 <div class="col-sm-4">
                                     <textarea name="keterangan" class="form-control"
@@ -140,25 +166,12 @@
                                     {{ $message }}
                                 </div>
                                 @enderror
-                                {{--<label class="col-sm-2 col-form-label">Lampiran</label>--}}
-                                {{--<div class="col-sm-4">--}}
-                                {{--@if (!empty($pengajuan) && $pengajuan->featured_image)--}}
-                                {{--<img src="{{ $pengajuan->featured_image }}"--}}
-                                {{--alt="{{ $pengajuan->featured_image_caption }}" class="img-fluid img-thumbnail" />--}}
-                                {{--@endif--}}
-                                {{--<input type="file" name="lampiranSk" class="form-control" />--}}
-                                {{--</div>--}}
-                                {{--@error('lampiranSk')--}}
-                                {{--<div class="invalid-feedback">--}}
-                                {{--{{ $message }}--}}
-                                {{--</div>--}}
-                                {{--@enderror--}}
                             </div>
                         </div>
 
                         <div class="card-footer text-left">
                             <button
-                            class="btn btn-primary">{{ empty($suratkeluar) ? 'Create' : 'Update' }}</button>
+                                    class="btn btn-primary">{{ empty($suratkeluar) ? 'Create' : 'Update' }}</button>
                             {{--<a href="{{ url('admin/sipas/suratkeluar') }}"><button class="btn btn-light">Close</button></a>--}}
                             <a class="btn btn-light" href="{{ url('admin/sipas/suratkeluar') }}">Close</a>
                         </div>

@@ -143,6 +143,10 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         $suratkeluar->status = 'Submit';
         $suratkeluar->created_by = auth()->user()->id;
         $suratkeluar->created_by_name = auth()->user()->name;
+        //Upload File
+        if (isset($params['lampiranSk'])) {
+            $suratkeluar->addMediaFromRequest('lampiranSk')->toMediaCollection('file_surat_keluar');
+        }
         return $suratkeluar->save();
     }
 
@@ -233,14 +237,6 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
                 $suratkeluar->status = 'Received';
                 break;
         }
-
-        // if ($suratkeluar->status_id == 2) {
-        //     $suratkeluar->status_id = 3;
-        //     $suratkeluar->status = 'Done';
-        // } else {
-        //     $suratkeluar->status_id = 2;
-        //     $suratkeluar->status = 'Received';
-        // }
 
         return $suratkeluar->save();
     }

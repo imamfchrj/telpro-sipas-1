@@ -54,12 +54,12 @@
                                             <td>{{ $suratkeluar->perihal }}</td>
                                             <td>{{ $suratkeluar->status }}</td>
                                             <td>
-                                            @if($suratkeluar->status_id == 4)
+                                            {{--@if($suratkeluar->status_id == 4)--}}
                                             <a class="btn btn-sm btn-outline-secondary"
                                                        href="{{ url('admin/sipas/suratkeluar/'. $suratkeluar->id .'/download')}}"><i
                                                                 class="far fa-save"></i>
                                                     </a>
-                                                    @endif
+                                            {{--@endif--}}
                                             </td>
                                             <td>
                                                 {{--@can('view_sipas-suratkeluar')--}}

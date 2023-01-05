@@ -43,7 +43,11 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{ $suratkeluar->kategori }}</td>
-                                            <td>{{ $suratkeluar->nomor_surat }}</td>
+                                            @if ($suratkeluar->status_id == 1)
+                                                <td>{{ substr ($suratkeluar->nomor_surat, -25) }}</td>
+                                            @else
+                                                <td>{{ $suratkeluar->nomor_surat }}</td>
+                                            @endif
                                             <td>{{ $suratkeluar->tanggal_surat }}</td>
                                             <td>{{ $suratkeluar->dari }}</td>
                                             <td>{{ $suratkeluar->kepada }}</td>

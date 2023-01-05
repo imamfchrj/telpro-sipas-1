@@ -49,7 +49,7 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         }
 
         if ($perPage) {
-            return $suratkeluar->sortable()->orderBy('id','DESC')->paginate($perPage);
+            return $suratkeluar->sortable()->orderBy('id', 'DESC')->paginate($perPage);
         }
 
         // if ($suratkeluar->count() != 0) {
@@ -69,19 +69,49 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
 
         // 001/UM-000/GSD-2a000/I/2022
         $time = strtotime($params['tanggal_surat']);
+        $tanggal_sekarang = date('Y-m-d');
+
         $bulan = date('m', $time);
         $tahun = date('Y', $time);
 
-        $last_suratkeluar = MSuratkeluar::where('tahun', $tahun)->where('kategori', $params['kategori'])
-            ->orderBy('id', 'DESC')
-            ->first();
-        if (empty($last_suratkeluar)) {
-            $new_number = sprintf("%03d", 001);
+        // Cek Backdate atau Tidak
+        if ($params['tanggal_surat'] < $tanggal_sekarang) {
+            // TANGGAL BACKDATE
+            $start_nomor = 1;
+            $max_cadangan = 500;
+
+            $last_suratkeluar = MSuratkeluar::where('tahun', $tahun)->where('kategori', $params['kategori'])->where('nomor', '<=', $max_cadangan)
+                ->orderBy('id', 'DESC')
+                ->first();
+            if (empty($last_suratkeluar)) {
+                $new_number = sprintf("%03d", $start_nomor);
+            } else {
+                if ($last_suratkeluar->nomor == $max_cadangan) {
+                    // JIKA NOMOR CADANGAN KATEGGORI INI SUDAH HABIS
+                    return alert('NOMOR CADANGAN SUDAH HABIS');
+                } else {
+                    $last_number = $last_suratkeluar->nomor;
+                    $new_numbers = $last_number + 1;
+                    $new_number = sprintf("%03d", $new_numbers);
+                }
+            }
+
         } else {
-            $last_number = $last_suratkeluar->nomor;
-            $new_numbers = $last_number + 1;
-            $new_number = sprintf("%03d", $new_numbers);
+            // TANGGAL NORMAL ( TIDAK BACKDARTE )
+            $start_nomor = 501;
+
+            $last_suratkeluar = MSuratkeluar::where('tahun', $tahun)->where('kategori', $params['kategori'])->where('nomor', '>=', $start_nomor)
+                ->orderBy('id', 'DESC')
+                ->first();
+            if (empty($last_suratkeluar)) {
+                $new_number = sprintf("%03d", $start_nomor);
+            } else {
+                $last_number = $last_suratkeluar->nomor;
+                $new_numbers = $last_number + 1;
+                $new_number = sprintf("%03d", $new_numbers);
+            }
         }
+
         if (!empty($params['id_unit'])) {
             $get_unit = MUnit::where('id', $params['id_unit'])
                 ->orderBy('id', 'DESC')
@@ -91,8 +121,6 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         }
 
         $no_surat = $new_number . '/' . $params['kategori'] . '-' . $params['klasifikasi'] . '/' . $unit . '/' . $bulan . '/' . $tahun;
-//        dd($no_surat);
-//        exit;
 
         // Insert Customer
         $suratkeluar = new MSuratkeluar();
@@ -167,7 +195,7 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         }
 
         if ($perPage) {
-            return $suratmasuk->sortable()->orderBy('id','DESC')->paginate($perPage);
+            return $suratmasuk->sortable()->orderBy('id', 'DESC')->paginate($perPage);
         }
 
         return $suratmasuk->get();
@@ -213,7 +241,7 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         //     $suratkeluar->status_id = 2;
         //     $suratkeluar->status = 'Received';
         // }
-        
+
         return $suratkeluar->save();
     }
 
@@ -223,7 +251,7 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         $url = 'https://wa01.ocatelkom.co.id/api/v2/push/message';
         $token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiYXBwbGljYXRpb24iOiI2MzYzNzU5ZTBjOTQ5NDAwMjE3NjM0YTkiLCJpYXQiOjE1MTYyMzkwMjJ9.dCsEsnctWvZfsu9OGYGKCQW5u0-oRAnAI7806-4Dl0ea57kgggTY7rC5pJYwtfabOybcM5loP95Bam_CTkQ4l2Nm_yxiRBDTT-xfq8uC1JwKclZu0ZS2ekjO-MXuk08tntnXCpi-gTVvAuYno1QaFgpsMFed6HuQB60IlHyxGH9CTnA7Nsfyc0vCI2KH9px2MhwIOWTsN8p_GRE-yk80eOVnAwMGQ3JoMVpV0bbu9Bs5xAyQVprGINAwfja_VhkemEf4Ad9ZOR1Y-LDtI_7-qRVgPZAs1bHaqbPhrp3BSHal4CUauXfHFLBsAar7-7KWZNYgcK7KCRESwTIucPcfmQ';
         $body = '{
-                "phone_number": "'.$user_unit->nomor_tlp.'",
+                "phone_number": "' . $user_unit->nomor_tlp . '",
                 "message": {
                     "type": "template",
                     "template": {
@@ -245,11 +273,11 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
                                 "parameters": [
                                     {
                                         "type": "text",
-                                        "text": "'.$user_unit->name.'"
+                                        "text": "' . $user_unit->name . '"
                                     },
                                     {
                                         "type": "text",
-                                        "text": "'.$params->nomor_surat.'"
+                                        "text": "' . $params->nomor_surat . '"
                                     }
                                 ]
                             }
@@ -258,8 +286,8 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
                 }
             }';
 
-            $body = Str::replace("\n", '', $body);
-            $response = Http::withOptions(['verify' => false])->withToken($token)->withBody($body, 'application/json')->post($url);
+        $body = Str::replace("\n", '', $body);
+        $response = Http::withOptions(['verify' => false])->withToken($token)->withBody($body, 'application/json')->post($url);
     }
 
 }

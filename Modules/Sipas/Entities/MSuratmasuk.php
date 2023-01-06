@@ -7,13 +7,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\File;
+use Kyslik\ColumnSortable\Sortable;
 
 class MSuratmasuk extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, Sortable;
 
     protected $fillable = [
 
+    ];
+
+    public $sortable = [
+        'tanggal_terima', 'nomor_surat', 'perihal', 'dari', 'disposisi_name','status'
     ];
 
     /**

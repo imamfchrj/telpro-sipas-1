@@ -59,7 +59,7 @@ class SuratkeluarController extends SipasController
 //            'per_page' => $this->perPage,
             'per_page' => 10,
             'order' => [
-                'id' => 'asc',
+//                'id' => 'asc',
             ],
             'filter' => $params,
         ];
@@ -165,7 +165,8 @@ class SuratkeluarController extends SipasController
 
     public function download($uid)
     {
-        $filedownload = Media::where('model_id', $uid)->first();
+//        $filedownload = Media::where('model_id', $uid)->first();
+        $filedownload = Media::where('model_id', $uid)->latest()->first();
 
         return response()->download($filedownload->getPath());
     }

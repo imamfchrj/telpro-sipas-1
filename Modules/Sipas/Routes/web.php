@@ -22,5 +22,6 @@ Route::prefix('admin/sipas')->as('sipas-')->namespace('\Modules\Sipas\Http\Contr
     Route::resource('suratmasuk', 'SuratmasukController');
     Route::resource('suratkeluar', 'SuratkeluarController');
     Route::resource('ekspor', 'EksporController');
-    Route::get('suratkeluar/{id}/download', 'SuratkeluarController@download');
+//    Route::get('suratkeluar/{id}/download', 'SuratkeluarController@download');
+    Route::get('suratkeluar/{uid}/download', 'SuratkeluarController@download');
 });

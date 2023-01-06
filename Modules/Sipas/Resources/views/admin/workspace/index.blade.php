@@ -21,13 +21,21 @@
                                 <table id="suratkeluar" class="table table-bordered table-striped table-sm ">
                                     <thead>
                                     <th>No</th>
-                                    <th>Kategori Surat</th>
-                                    <th>Nomor Surat</th>
-                                    <th>Tanggal Surat</th>
-                                    <th>Dari</th>
-                                    <th>Kepada</th>
-                                    <th>Perihal</th>
-                                    <th>Status</th>
+                                    {{--<th>Kategori Surat</th>--}}
+                                    {{--<th>Nomor Surat</th>--}}
+                                    {{--<th>Tanggal Surat</th>--}}
+                                    {{--<th>Dari</th>--}}
+                                    {{--<th>Kepada</th>--}}
+                                    {{--<th>Perihal</th>--}}
+                                    {{--<th>Status</th>--}}
+                                    <th>@sortablelink('kategori','Kategori Surat')</th>
+                                    <th>@sortablelink('nomor_surat','Nomor Surat')</th>
+                                    <th>@sortablelink('tanggal_surat','Tanggal Surat')</th>
+                                    <th>@sortablelink('dari','Dari')</th>
+                                    <th>@sortablelink('kepada','Kepada')</th>
+                                    <th>@sortablelink('perihal','Perihal')</th>
+                                    <th>@sortablelink('status','Status')</th>
+                                    <th>File</th>
                                     <th>Action</th>
                                     </thead>
                                     <tbody>
@@ -41,6 +49,14 @@
                                             <td>{{ $workspace->kepada }}</td>
                                             <td>{{ $workspace->perihal }}</td>
                                             <td>{{ $workspace->status }}</td>
+                                            <td>
+                                                {{--@if($suratkeluar->status_id == 4)--}}
+                                                <a class="btn btn-sm btn-outline-secondary"
+                                                   href="{{ url('admin/sipas/suratkeluar/'. $workspace->id .'/download')}}"><i
+                                                            class="far fa-save"></i>
+                                                </a>
+                                                {{--@endif--}}
+                                            </td>
                                             <td>
                                                 {{--@can('view_sipas-suratkeluar')--}}
                                                     {{--<a class="btn btn-sm btn-primary"--}}

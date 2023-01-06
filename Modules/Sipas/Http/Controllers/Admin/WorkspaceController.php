@@ -61,7 +61,7 @@ class WorkspaceController extends SipasController
 //            'per_page' => $this->perPage,
             'per_page' => 10,
             'order' => [
-                'id' => 'asc',
+//                'id' => 'asc',
             ],
             'filter' => $params,
         ];

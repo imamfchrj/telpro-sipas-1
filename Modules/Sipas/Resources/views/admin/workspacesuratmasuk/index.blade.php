@@ -21,12 +21,18 @@
                                 <table id="suratmasuk" class="table table-bordered table-striped table-sm ">
                                     <thead>
                                     <th>No</th>
-                                    <th>Tanggal Terima</th>
-                                    <th>Nomor Surat</th>
-                                    <th>Perihal</th>
-                                    <th>Dari</th>
-                                    <th>Kepada</th>
-                                    <th>Status</th>
+                                    {{--<th>Tanggal Terima</th>--}}
+                                    {{--<th>Nomor Surat</th>--}}
+                                    {{--<th>Perihal</th>--}}
+                                    {{--<th>Dari</th>--}}
+                                    {{--<th>Kepada</th>--}}
+                                    {{--<th>Status</th>--}}
+                                    <th>@sortablelink('tanggal_terima','Tanggal Terima')</th>
+                                    <th>@sortablelink('nomor_surat','Nomor Surat')</th>
+                                    <th>@sortablelink('perihal','Perihal')</th>
+                                    <th>@sortablelink('dari','Dari')</th>
+                                    <th>@sortablelink('disposisi_name','Kepada')</th>
+                                    <th>@sortablelink('status','Status')</th>
                                     <th>Action</th>
                                     </thead>
                                     <tbody>

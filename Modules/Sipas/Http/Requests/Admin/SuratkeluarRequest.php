@@ -31,7 +31,7 @@ class SuratkeluarRequest extends FormRequest
             'kepada' => '',
             'perihal' => '',
             'keterangan' => '',
-//            'lampiranSk' => ''
+            'lampiranSk' => 'required'
 
         ]);
     }

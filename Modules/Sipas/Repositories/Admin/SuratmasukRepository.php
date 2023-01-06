@@ -42,11 +42,16 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
         if (!empty($options['filter']['q'])) {
             $suratmasuk = $suratmasuk->where(function ($query) use ($options) {
                 $query->where('perihal', 'LIKE', "%{$options['filter']['q']}%");
+//                    ->orWhere('nomor_surat', 'LIKE', "%{$options['filter']['q']}%")
+//                    ->orWhere('perihal', 'LIKE', "%{$options['filter']['q']}%")
+//                    ->orWhere('dari', 'LIKE', "%{$options['filter']['q']}%")
+//                    ->orWhere('disposisi_name', 'LIKE', "%{$options['filter']['q']}%")
+//                    ->orWhere('status', 'LIKE', "%{$options['filter']['q']}%");
             });
         }
 
         if ($perPage) {
-            return $suratmasuk->paginate($perPage);
+            return $suratmasuk->sortable()->orderBy('id','DESC')->paginate($perPage);
         }
 
         return $suratmasuk->get();
@@ -140,7 +145,7 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
         }
 
         if ($perPage) {
-            return $suratmasuk->paginate($perPage);
+            return $suratmasuk->sortable()->orderBy('id','DESC')->paginate($perPage);
         }
 
         return $suratmasuk->get();

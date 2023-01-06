@@ -21,13 +21,20 @@
                                 <table id="suratkeluar" class="table table-bordered table-striped table-sm ">
                                     <thead>
                                     <th>No</th>
-                                    <th>Kategori Surat</th>
-                                    <th>Nomor Surat</th>
-                                    <th>Tanggal Surat</th>
-                                    <th>Dari</th>
-                                    <th>Kepada</th>
-                                    <th>Perihal</th>
-                                    <th>Status</th>
+                                    {{--<th>Kategori Surat</th>--}}
+                                    {{--<th>Nomor Surat</th>--}}
+                                    {{--<th>Tanggal Surat</th>--}}
+                                    {{--<th>Dari</th>--}}
+                                    {{--<th>Kepada</th>--}}
+                                    {{--<th>Perihal</th>--}}
+                                    {{--<th>Status</th>--}}
+                                    <th>@sortablelink('kategori','Kategori Surat')</th>
+                                    <th>@sortablelink('nomor_surat','Nomor Surat')</th>
+                                    <th>@sortablelink('tanggal_surat','Tanggal Surat')</th>
+                                    <th>@sortablelink('dari','Dari')</th>
+                                    <th>@sortablelink('kepada','Kepada')</th>
+                                    <th>@sortablelink('perihal','Perihal')</th>
+                                    <th>@sortablelink('status','Status')</th>
                                     <th>File</th>
                                     <th>Action</th>
                                     </thead>
@@ -36,19 +43,23 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{ $suratkeluar->kategori }}</td>
-                                            <td>{{ $suratkeluar->nomor_surat }}</td>
+                                            @if ($suratkeluar->status_id == 1)
+                                                <td>{{ substr ($suratkeluar->nomor_surat, -25) }}</td>
+                                            @else
+                                                <td>{{ $suratkeluar->nomor_surat }}</td>
+                                            @endif
                                             <td>{{ $suratkeluar->tanggal_surat }}</td>
                                             <td>{{ $suratkeluar->dari }}</td>
                                             <td>{{ $suratkeluar->kepada }}</td>
                                             <td>{{ $suratkeluar->perihal }}</td>
                                             <td>{{ $suratkeluar->status }}</td>
                                             <td>
-                                            @if($suratkeluar->status_id == 4)
+                                            {{--@if($suratkeluar->status_id == 4)--}}
                                             <a class="btn btn-sm btn-outline-secondary"
                                                        href="{{ url('admin/sipas/suratkeluar/'. $suratkeluar->id .'/download')}}"><i
                                                                 class="far fa-save"></i>
                                                     </a>
-                                                    @endif
+                                            {{--@endif--}}
                                             </td>
                                             <td>
                                                 {{--@can('view_sipas-suratkeluar')--}}

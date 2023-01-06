@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '61f2dcc7dc282bceaf1e23d5445046c7f1b6498c',
+        'reference' => 'b7eb83eacf9a11084bb5da89dc231401039767d9',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -427,6 +427,15 @@
                 0 => '*',
             ),
         ),
+        'kyslik/column-sortable' => array(
+            'pretty_version' => '6.4.2',
+            'version' => '6.4.2.0',
+            'reference' => '91792a166dd02aaaeb7928417bb49d808b0c58ea',
+            'type' => 'package',
+            'install_path' => __DIR__ . '/../kyslik/column-sortable',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'laravel/fortify' => array(
             'pretty_version' => 'v1.14.0',
             'version' => '1.14.0.0',
@@ -448,7 +457,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '61f2dcc7dc282bceaf1e23d5445046c7f1b6498c',
+            'reference' => 'b7eb83eacf9a11084bb5da89dc231401039767d9',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

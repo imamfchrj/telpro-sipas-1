@@ -61,12 +61,12 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Perihal</label>
+                                <label class="col-sm-2 col-form-label">Dari</label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="perihal" id="perihal" class="form-control @error('perihal') is-invalid @enderror @if (!$errors->has('perihal') && old('perihal')) is-valid @endif"
-                                           value="{{ old('perihal', !empty($workspacesuratmasuk) ? $workspacesuratmasuk->perihal : null) }}" readonly>
+                                    <input type="text" name="dari" id="dari" class="form-control @error('dari') is-invalid @enderror @if (!$errors->has('dari') && old('dari')) is-valid @endif"
+                                           value="{{ old('dari', !empty($workspacesuratmasuk) ? $workspacesuratmasuk->dari : null) }}" readonly>
                                 </div>
-                                @error('perihal')
+                                @error('dari')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -92,17 +92,6 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Dari</label>
-                                <div class="col-sm-4">
-                                    <input type="text" name="dari" id="dari" class="form-control @error('dari') is-invalid @enderror @if (!$errors->has('dari') && old('dari')) is-valid @endif"
-                                           value="{{ old('dari', !empty($workspacesuratmasuk) ? $workspacesuratmasuk->dari : null) }}" readonly>
-                                </div>
-                                @error('dari')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-
                                 <label class="col-sm-2 col-form-label">Kepada</label>
                                 <div class="col-sm-4">
                                     {{--{!! Form::select('kepada', $unit, !empty($workspacesuratmasuk->disposisi_kode_unit) ? $workspacesuratmasuk->disposisi_kode_unit :--}}
@@ -114,6 +103,17 @@
                                     </select>
                                 </div>
                                 @error('kepada')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+
+                                <label class="col-sm-2 col-form-label">Perihal</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="perihal" id="perihal" class="form-control @error('perihal') is-invalid @enderror @if (!$errors->has('perihal') && old('perihal')) is-valid @endif"
+                                           value="{{ old('perihal', !empty($workspacesuratmasuk) ? $workspacesuratmasuk->perihal : null) }}">
+                                </div>
+                                @error('perihal')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

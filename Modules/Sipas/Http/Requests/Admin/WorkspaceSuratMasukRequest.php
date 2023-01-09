@@ -22,6 +22,7 @@ class WorkspaceSuratMasukRequest extends FormRequest
         return array_merge([
             'nomor_surat' => '',
             'tanggal_surat' => '',
+            'perihal' => '',
         ]);
     }
 

@@ -156,6 +156,7 @@ class SuratmasukRepository implements SuratmasukRepositoryInterface
         $suratmasuk = MSuratmasuk::findOrFail($id);
         $suratmasuk->nomor_surat = $params['nomor_surat'];
         $suratmasuk->tanggal_surat = $params['tanggal_surat'];
+        $suratmasuk->perihal = $params['perihal'];
         $suratmasuk->updated_by = auth()->user()->id;
         $suratmasuk->updated_by_name = auth()->user()->name;
         $suratmasuk->status_id = 2;

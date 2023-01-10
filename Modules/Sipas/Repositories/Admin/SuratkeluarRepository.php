@@ -28,13 +28,12 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
                     $query->where('created_by', auth()->user()->id);
                 }
             }
+        )->orWhere(
+            function ($query) {
+                $query->where('id_unit', auth()->user()->group)
+                    ->whereIn('status_id', array(3,4));
+            }
         );
-//            ->orWhere(
-//            function ($query) {
-//                $query->where('kepada_id_unit', auth()->user()->group)
-//                    ->where('status_id', 2);
-//            }
-//        );
 
         if ($orderByFields) {
             foreach ($orderByFields as $field => $sort) {

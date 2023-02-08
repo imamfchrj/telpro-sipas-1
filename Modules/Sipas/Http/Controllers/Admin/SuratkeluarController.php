@@ -56,7 +56,6 @@ class SuratkeluarController extends SipasController
     {
         $params = $request->all();
         $options = [
-//            'per_page' => $this->perPage,
             'per_page' => 10,
             'order' => [
 //                'id' => 'asc',
@@ -64,14 +63,9 @@ class SuratkeluarController extends SipasController
             'filter' => $params,
         ];
 
-        // $suratkeluar = $this->suratkeluarRepository->findAll($options);
-
         $this->data['suratkeluars'] = $this->suratkeluarRepository->findAll($options);
-
-        // $this->data['suratkeluars'] = $suratkeluar['data_surat_keluar'];
-        // $this->data['file_surat_keluar'] = $suratkeluar['file_surat_keluar'];
-
         $this->data['filter'] = $params;
+
         return view('sipas::admin.suratkeluar.index', $this->data);
     }
 

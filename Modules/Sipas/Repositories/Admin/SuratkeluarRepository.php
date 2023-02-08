@@ -22,18 +22,19 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
         $perPage = $options['per_page'] ?? null;
         $orderByFields = $options['order'] ?? [];
 
-        $suratkeluar = (new MSuratkeluar())->where(
-            function ($query) {
-                if (auth()->user()->roles[0]->id == 8 || auth()->user()->roles[0]->id == 9 || auth()->user()->roles[0]->id == 11) {
-                    $query->where('created_by', auth()->user()->id);
-                }
-            }
-        )->orWhere(
-            function ($query) {
-                $query->where('id_unit', auth()->user()->group)
-                    ->whereIn('status_id', array(3,4));
-            }
-        );
+        $suratkeluar = (new MSuratkeluar());
+//        $suratkeluar = (new MSuratkeluar())->where(
+//            function ($query) {
+//                if (auth()->user()->roles[0]->id == 8 || auth()->user()->roles[0]->id == 9 || auth()->user()->roles[0]->id == 11) {
+//                    $query->where('created_by', auth()->user()->id);
+//                }
+//            }
+//        )->orWhere(
+//            function ($query) {
+//                $query->where('id_unit', auth()->user()->group)
+//                    ->whereIn('status_id', array(3,4));
+//            }
+//        );
 
         if ($orderByFields) {
             foreach ($orderByFields as $field => $sort) {
@@ -46,6 +47,19 @@ class SuratkeluarRepository implements SuratkeluarRepositoryInterface
                 $query->where('perihal', 'LIKE', "%{$options['filter']['q']}%");
             });
         }
+
+        $suratkeluar = $suratkeluar->where(
+            function ($query) {
+                if (auth()->user()->roles[0]->id == 8 || auth()->user()->roles[0]->id == 9 || auth()->user()->roles[0]->id == 11) {
+                    $query->where('created_by', auth()->user()->id);
+                }
+            }
+        )->orWhere(
+            function ($query) {
+                $query->where('id_unit', auth()->user()->group)
+                    ->whereIn('status_id', array(3,4));
+            }
+        );
 
         if ($perPage) {
             return $suratkeluar->sortable()->orderBy('id', 'DESC')->paginate($perPage);
